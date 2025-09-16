@@ -1,14 +1,16 @@
 /* Basic theme tokens */
 :root{
-  --bg-light: #f4f6f8;
+  --bg-light: #f0f2f5;
   --card-light: #ffffff;
-  --text-light: #0c1822;
-  --muted-light: #5b6b78;
+  --text-light: #1c1e21;
+  --muted-light: #65676b;
+  --accent-light: #007bff; /* Added from referance */
 
-  --bg-dark: #0b0e11;
-  --card-dark: #0f1416;
-  --text-dark: #ecf0f1;
-  --muted-dark: #9aa6b0;
+  --bg-dark: #121212;
+  --card-dark: #1e1e1e;
+  --text-dark: #e4e6eb;
+  --muted-dark: #b0b3b8;
+  --accent-dark: #00c6ff; /* Added from referance */
 
   --accent-yt: #ff3b30;
   --accent-ytm: #e23a3a;
@@ -16,9 +18,10 @@
   --accent-spotify: #1db954;
   --accent-microg: #34a853;
 
-  --radius: 12px;
+  --radius: 20px; /* Updated from referance */
   --container-w: 1200px;
   --glass: rgba(255,255,255,0.03);
+  --header-bg: #2a2a2a; /* Added from referance's dark theme, but placed in root as a general variable */
 }
 
 /* Default (light) */
@@ -37,14 +40,20 @@
   --text: var(--text-dark);
   --muted: var(--muted-dark);
   --border: rgba(255,255,255,0.04);
+  --header-bg: #2a2a2a; /* Added from referance */
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-  background:var(--bg); color:var(--text);
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  margin:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Updated from referance */
+  line-height: 1.6; /* Added from referance */
+  background:var(--bg);
+  color:var(--text);
+  min-height: 100vh; /* Added from referance */
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
 /* Header */
@@ -144,21 +153,6 @@ body{
   transition: .4s;
 }
 
-.slider:before {
-  position: absolute;
-  content: "☀️";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-
 input:checked + .slider {
   background-color: var(--accent-yt);
 }
@@ -167,7 +161,6 @@ input:checked + .slider:before {
   content: "🌙";
   transform: translateX(26px);
 }
-
 .slider.round {
   border-radius: 34px;
 }
@@ -228,4 +221,8 @@ input:checked + .slider:before {
   .control-group {
     justify-content: space-between;
   }
+}
+
+:root[data-theme="light"] {
+    --header-bg: var(--card-dark);
 }

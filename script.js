@@ -99,4 +99,35 @@
         // Optimize page load performance
         document.addEventListener('DOMContentLoaded', () => {
             document.body.style.visibility = 'visible';
+            applyInitialTheme();
+            document.getElementById("theme-checkbox").addEventListener("change", toggleTheme);
         });
+
+// Theme handling
+function applyInitialTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem("theme");
+  const themeCheckbox = document.getElementById("theme-checkbox");
+
+  if (stored) {
+    root.setAttribute("data-theme", stored);
+    if (stored === "dark") {
+      themeCheckbox.checked = true;
+    }
+    return;
+  }
+  // auto detect
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  root.setAttribute("data-theme", prefersDark ? "dark" : "light");
+  if (prefersDark) {
+    themeCheckbox.checked = true;
+  }
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const themeCheckbox = document.getElementById("theme-checkbox");
+  const newTheme = themeCheckbox.checked ? "dark" : "light";
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+}

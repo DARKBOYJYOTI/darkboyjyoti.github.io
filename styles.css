@@ -1,13 +1,55 @@
-        * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+:root {
+    --bg-light: #f0f2f5;
+    --card-light: #ffffff;
+    --text-light: #1c1e21;
+    --muted-light: #65676b;
+    --accent-light: #007bff;
+
+    --bg-dark: #121212;
+    --card-dark: #1e1e1e;
+    --text-dark: #e4e6eb;
+    --muted-dark: #b0b3b8;
+    --accent-dark: #00c6ff;
+    --accent-yt: #ff3b30;
+
+    --radius: 20px;
+    --container-w: 1200px;
+}
+
+/* Default (light) */
+:root[data-theme="light"] {
+    --bg: var(--bg-light);
+    --card: var(--card-light);
+    --text: var(--text-light);
+    --muted: var(--muted-light);
+    --border: rgba(13, 18, 23, 0.06);
+}
+
+/* Dark theme */
+:root[data-theme="dark"] {
+    --bg: var(--bg-dark);
+    --card: var(--card-dark);
+    --text: var(--text-dark);
+    --muted: var(--muted-dark);
+    --border: rgba(255, 255, 255, 0.04);
+    --header-bg: #2a2a2a;
+}
+
+:root[data-theme="light"] {
+    --header-bg: var(--card-dark);
+}
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
         }
 
@@ -18,13 +60,77 @@
         }
 
         .portfolio-card {
-            background: white;
+            background: var(--card);
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transform: translateZ(0);
             will-change: transform;
+            border: 1px solid var(--border);
         }
+
+.theme-switch-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "☀️";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+input:checked+.slider {
+    background-color: var(--accent-yt);
+}
+
+input:checked+.slider:before {
+    content: "🌙";
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
 
         @keyframes slideUp {
             from {
@@ -38,8 +144,8 @@
         }
 
         .header {
-            background: #2c3e50;
-            color: white;
+            background: var(--header-bg);
+            color: var(--text-dark);
             padding: 40px 30px;
             text-align: center;
             position: relative;
@@ -130,9 +236,13 @@
             margin-bottom: 40px;
         }
 
+        .section:last-of-type {
+            margin-bottom: 0;
+        }
+
         .section-title {
             font-size: 1.8rem;
-            color: #2c3e50;
+            color: var(--text);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -332,7 +442,7 @@
         }
 
         .about {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: var(--bg);
             padding: 25px;
             border-radius: 12px;
             border-left: 4px solid #3498db;
@@ -364,8 +474,8 @@
         }
 
         .contact-info {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
+            background: var(--header-bg);
+            color: var(--text-dark);
             padding: 25px;
             border-radius: 12px;
             text-align: center;
@@ -413,7 +523,7 @@
         .footer {
             text-align: center;
             padding: 20px;
-            color: #7f8c8d;
+            color: var(--muted);
             font-size: 0.9rem;
         }
 
