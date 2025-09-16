@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>QR Code Generator</h1>
+            <p>Generate QR codes for various types of content</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <div class="type-selector">
+                    <label for="qr-type">QR Code Type:</label>
+                    <select id="qr-type">
+                        <option value="text">Text</option>
+                        <option value="url">URL</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <option value="sms">SMS</option>
+                        <option value="whatsapp">WhatsApp Message</option>
+                        <option value="wifi">WiFi</option>
+                        <option value="vcard">vCard</option>
+                    </select>
+                </div>
+
+                <div class="input-fields">
+                    <!-- Dynamic input fields will be inserted here -->
+                    <div class="default-field">
+                        <label for="content">Content:</label>
+                        <textarea id="content" placeholder="Enter your content here"></textarea>
+                    </div>
+                </div>
+
+                <div class="qr-options">
+                    <div class="option">
+                        <label for="size">QR Code Size:</label>
+                        <select id="size">
+                            <option value="100">Small (100x100)</option>
+                            <option value="200" selected>Medium (200x200)</option>
+                            <option value="300">Large (300x300)</option>
+                            <option value="400">Extra Large (400x400)</option>
+                            <option value="custom">Custom Size</option>
+                        </select>
+                        <div id="custom-size-inputs" class="custom-size-wrapper" style="display: none;">
+                            <input type="number" id="custom-width" placeholder="Width (px)" min="50" max="1000">
+                            <input type="number" id="custom-height" placeholder="Height (px)" min="50" max="1000">
+                        </div>
+                    </div>
+
+                    <div class="option">
+                        <label for="download-format">Download Format:</label>
+                        <select id="download-format">
+                            <option value="png" selected>PNG</option>
+                            <option value="jpg">JPG</option>
+                            <option value="webp">WebP</option>
+                            <option value="svg">SVG</option>
+                        </select>
+                    </div>
+
+                    <div class="option">
+                        <label for="correction-level">Error Correction:</label>
+                        <select id="correction-level">
+                            <option value="L">Low (7%)</option>
+                            <option value="M" selected>Medium (15%)</option>
+                            <option value="Q">Quartile (25%)</option>
+                            <option value="H">High (30%)</option>
+                        </select>
+                    </div>
+
+                    <div class="option">
+                        <label for="foreground">Foreground Color:</label>
+                        <input type="color" id="foreground" value="#000000">
+                    </div>
+
+                    <div class="option">
+                        <label for="background">Background Color:</label>
+                        <input type="color" id="background" value="#ffffff">
+                    </div>
+                </div>
+
+                <button id="generate-btn">Generate QR Code</button>
+            </div>
+
+            <div class="output-section">
+                <div id="qr-result">
+                    <img id="qr-code" src="" alt="QR Code will appear here">
+                </div>
+                <div class="actions">
+                    <button id="download-btn" disabled>
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button id="share-btn" disabled>
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>Created with ❤️ by DarkBoyJyoti</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

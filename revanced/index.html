@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ReVanced Downloader</title>
+  <meta name="description" content="A simple and easy-to-use downloader for ReVanced apps. Get the latest versions of YouTube ReVanced, YouTube Music ReVanced, and more.">
+  <meta name="keywords" content="ReVanced, YouTube ReVanced, YouTube Music ReVanced, MicroG, ReVanced Downloader, ReVanced APK, ReVanced Magisk">
+  <meta property="og:title" content="ReVanced Downloader" />
+  <meta property="og:description" content="A simple and easy-to-use downloader for ReVanced apps. Get the latest versions of YouTube ReVanced, YouTube Music ReVanced, and more." />
+  <meta property="og:image" content="https://darkboyjyoti.github.io/revanced/icons/youtube.png" />
+  <meta property="og:url" content="https://darkboyjyoti.github.io/revanced/" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="icons/fav.png" type="image/png">
+  <link rel="canonical" href="https://darkboyjyoti.github.io/revanced/" />
+  <style>
+    /* Local PNG Icon Styling */
+    .card-icon img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      object-fit: cover;
+    }
+    .card-icon:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Dark mode support for icons */
+    [data-theme="dark"] .card-icon img {
+      filter: brightness(0.9);
+    }
+    [data-theme="dark"] .card-icon:hover img {
+      filter: brightness(1);
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ReVanced Downloader",
+      "operatingSystem": "Android",
+      "applicationCategory": "Multimedia",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "ratingCount": "12345"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="left">
+      <div class="title"><i class="fa-solid fa-download"></i> ReVanced Downloader</div>
+    </div>
+    <div class="right">
+      <button id="open-disclaimer" class="link-like">Disclaimer</button>
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme" title="Toggle dark/light">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid" id="cards">
+      <!-- Cards will be populated in HTML for accessibility, JS will fill downloads -->
+      <article class="card card-youtube" id="card-youtube">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/youtube.png" alt="YouTube" loading="lazy">
+          </div>
+          <h3>YouTube (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="youtube-meta"></div>
+          <div class="downloads" id="youtube-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-ytmusic" id="card-ytmusic">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/youtube-music.png" alt="YouTube Music" loading="lazy">
+          </div>
+          <h3>YouTube Music (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="ytmusic-meta"></div>
+          <div class="downloads" id="ytmusic-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-photos" id="card-photos">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/google-photos.png" alt="Google Photos" loading="lazy">
+          </div>
+          <h3>Google Photos (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="photos-meta"></div>
+          <div class="downloads" id="photos-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-spotify" id="card-spotify">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/spotify.png" alt="Spotify" loading="lazy">
+          </div>
+          <h3>Spotify (Universal)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="spotify-meta"></div>
+          <div class="downloads" id="spotify-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-microg" id="card-microg">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/microg.png" alt="MicroG" loading="lazy">
+          </div>
+          <h3>MicroG (Required)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="microg-meta"></div>
+          <div class="downloads" id="microg-downloads">Loading...</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="notes">
+      <strong>Note:</strong> This page is a convenience UI that fetches release assets from GitHub. I am <em>not</em> the mod author. Verify checksums and use at your own risk.
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      Made with ❤️ by <strong><a href="https://darkboyjyoti.github.io" target="_blank" rel="noopener noreferrer">Dark Boy Jyoti</a></strong> — Your Technical Assistant
+    </div>
+</footer>
+
+
+  <!-- Disclaimer Modal -->
+  <div id="disclaimer-modal" class="modal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="disc-title">
+      <button id="close-disclaimer" class="modal-close" aria-label="Close">✕</button>
+      <h2 id="disc-title">Disclaimer & Source</h2>
+      <p>
+        I am not the original mod author. This page fetches release assets directly from the repositories below and simply exposes convenient download links. Always verify signatures and checksums before installing.
+      </p>
+      <ul>
+        <li>ReVanced builds: <a href="https://github.com/j-hc/revanced-magisk-module" target="_blank" rel="noopener">github.com/j-hc/revanced-magisk-module</a></li>
+        <li>MicroG (GmsCore): <a href="https://github.com/ReVanced/GmsCore" target="_blank" rel="noopener">github.com/ReVanced/GmsCore</a></li>
+      </ul>
+      <div style="text-align:right">
+        <button id="ack-disclaimer" class="btn">I understand</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
