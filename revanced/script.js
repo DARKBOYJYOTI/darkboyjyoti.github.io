@@ -119,14 +119,18 @@ function renderAssets(containerId, metaId, releaseInfo, cardClass) {
   const arm64Assets = filteredAssets.filter(a => a.name.toLowerCase().includes("arm64") || a.name.toLowerCase().includes("v8a"));
   const armAssets = filteredAssets.filter(a => (a.name.toLowerCase().includes("arm") && !a.name.toLowerCase().includes("arm64")) || a.name.toLowerCase().includes("v7a"));
   const universalAssets = filteredAssets.filter(a => a.name.toLowerCase().includes("all") || a.name.toLowerCase().includes("universal"));
+  const otherAssets = filteredAssets.filter(a => !a.name.toLowerCase().includes("arm64") && !a.name.toLowerCase().includes("v8a") && !a.name.toLowerCase().includes("arm") && !a.name.toLowerCase().includes("v7a") && !a.name.toLowerCase().includes("all") && !a.name.toLowerCase().includes("universal"));
+
 
   if (architecture === 'arm64') {
     if (arm64Assets.length > 0) filteredAssets = arm64Assets;
     else if (universalAssets.length > 0) filteredAssets = universalAssets;
+    else if (otherAssets.length > 0) filteredAssets = otherAssets;
     else filteredAssets = [];
   } else if (architecture === 'arm') {
     if (armAssets.length > 0) filteredAssets = armAssets;
     else if (universalAssets.length > 0) filteredAssets = universalAssets;
+    else if (otherAssets.length > 0) filteredAssets = otherAssets;
     else filteredAssets = [];
   }
   
