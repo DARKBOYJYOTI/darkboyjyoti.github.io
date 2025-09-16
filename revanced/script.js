@@ -29,17 +29,7 @@ async function safeFetch(url, opts = {}) {
 
 // Parse asset name to type label
 function classifyAsset(nameLower) {
-  if (nameLower.includes("v7a.zip")) return "Magisk Module ARM";
-  if (nameLower.includes("v8a.zip")) return "Magisk Module ARM64";
-  if (nameLower.includes("arm64") || nameLower.includes("arm64-v8a")) return "ARM64 APK";
-  // arm-v7a detection should be checked before generic 'arm' so 'arm64' not miscaptured
-  if (nameLower.includes("arm-v7a") || nameLower.includes("armeabi-v7a") || (nameLower.includes("arm") && !nameLower.includes("arm64"))) return "ARM APK";
-//  if (nameLower.includes("-all.zip") || nameLower.includes("universal Magisk") || nameLower.includes("all.apk")) return "Universal APK";
-  if (nameLower.includes("-all.zip")) return "Universal Magisk Module";
-  if (nameLower.includes("-all.apk")) return "Universal APK";
-  //if (nameLower.includes("-signed.apk")) return "Signed APK";
-  if (nameLower.endsWith("hw-signed.apk")) return "HW Signed APK";
-  return "Signed APk";
+  return "Download";
 }
 
 // Format date to DD/MM/YYYY HH:MM AM/PM
@@ -84,36 +74,77 @@ async function findAssetsAcrossReleases(repo, assetMatchFn, maxPages = 5) {
   return null;
 }
 
+// Try to extract version from asset names, fallback to release name
+function extractVersion(release, assets) {
+  for (const asset of assets) {
+    // Match versions like "v19.09.37" or "1.2.3"
+    const match = asset.name.match(/v?(\d+(?:\.\d+)+)/);
+    if (match) {
+      return match[0];
+    }
+  }
+  return release.name || release.tag_name;
+}
+
+
+
 // Render assets into container
 function renderAssets(containerId, metaId, releaseInfo, cardClass) {
   const container = document.getElementById(containerId);
   const meta = document.getElementById(metaId);
   if (!container) return;
+  const card = container.closest('.card');
+  if (!card) return;
 
   if (!releaseInfo) {
-    container.innerHTML = "<div class='no'>No downloads found.</div>";
-    if (meta) meta.textContent = "";
+    card.style.display = 'none';
     return;
   }
 
   const { release, assets } = releaseInfo;
   container.innerHTML = ""; // clear
-  // sort assets: prefer ARM64 then ARM then Magisk then Universal
-  assets.sort((a, b) => {
-    const p = ["arm64", "arm-v7a", "arm", "magisk", "all", "universal", "signed.apk"];
-    const an = a.name.toLowerCase(), bn = b.name.toLowerCase();
-    const ai = p.findIndex(k => an.includes(k));
-    const bi = p.findIndex(k => bn.includes(k));
-    return ai - bi;
-  });
 
-  for (const a of assets) {
+  const installType = document.getElementById("install-type").value;
+  const architecture = document.getElementById("architecture").value;
+
+  let filteredAssets = assets;
+
+  if (installType === "root") {
+    filteredAssets = assets.filter(a => a.name.toLowerCase().includes("magisk"));
+  } else { // non-root
+    filteredAssets = assets.filter(a => !a.name.toLowerCase().includes("magisk"));
+  }
+
+  // Now apply architecture filtering to the filteredAssets
+  const arm64Assets = filteredAssets.filter(a => a.name.toLowerCase().includes("arm64") || a.name.toLowerCase().includes("v8a"));
+  const armAssets = filteredAssets.filter(a => (a.name.toLowerCase().includes("arm") && !a.name.toLowerCase().includes("arm64")) || a.name.toLowerCase().includes("v7a"));
+  const universalAssets = filteredAssets.filter(a => a.name.toLowerCase().includes("all") || a.name.toLowerCase().includes("universal"));
+
+  if (architecture === 'arm64') {
+    if (arm64Assets.length > 0) filteredAssets = arm64Assets;
+    else if (universalAssets.length > 0) filteredAssets = universalAssets;
+    else filteredAssets = [];
+  } else if (architecture === 'arm') {
+    if (armAssets.length > 0) filteredAssets = armAssets;
+    else if (universalAssets.length > 0) filteredAssets = universalAssets;
+    else filteredAssets = [];
+  }
+  
+  // Exclude HW Signed APKs
+  filteredAssets = filteredAssets.filter(a => !a.name.toLowerCase().endsWith("hw-signed.apk"));
+
+  if (filteredAssets.length === 0) {
+    card.style.display = 'none';
+    return;
+  } else {
+    card.style.display = 'block';
+  }
+
+  for (const a of filteredAssets) {
     const n = a.name;
     const label = classifyAsset(n.toLowerCase());
     const link = document.createElement("a");
     link.href = a.browser_download_url;
-    link.target = "_blank";
-    link.rel = "noopener";
     link.className = "download-btn";
     link.textContent = label;
     // Add title with name and size/time
@@ -121,9 +152,11 @@ function renderAssets(containerId, metaId, releaseInfo, cardClass) {
     link.title = `${n} — ${sizeMB}`;
     container.appendChild(link);
   }
+  
   if (meta) {
     const date = new Date(release.published_at || release.created_at);
-    meta.textContent = `Release: ${release.name || release.tag_name} • ${formatDateDDMMYYYY(date)}`;
+    const version = extractVersion(release, assets);
+    meta.textContent = `Version: ${version} • ${formatDateDDMMYYYY(date)}`;
   }
 }
 
@@ -188,28 +221,29 @@ async function refreshAllAndCache(cacheKey) {
 function applyInitialTheme() {
   const root = document.documentElement;
   const stored = localStorage.getItem("revanced_theme");
+  const themeCheckbox = document.getElementById("theme-checkbox");
+
   if (stored) {
     root.setAttribute("data-theme", stored);
-    updateThemeIcon(stored);
+    if (stored === "dark") {
+      themeCheckbox.checked = true;
+    }
     return;
   }
   // auto detect
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   root.setAttribute("data-theme", prefersDark ? "dark" : "light");
-  updateThemeIcon(prefersDark ? "dark" : "light");
+  if (prefersDark) {
+    themeCheckbox.checked = true;
+  }
 }
-function updateThemeIcon(theme) {
-  const icon = document.getElementById("theme-icon");
-  if (!icon) return;
-  icon.textContent = theme === "dark" ? "☀️" : "🌙";
-}
+
 function toggleTheme() {
   const root = document.documentElement;
-  const current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
-  const next = current === "dark" ? "light" : "dark";
-  root.setAttribute("data-theme", next);
-  localStorage.setItem("revanced_theme", next);
-  updateThemeIcon(next);
+  const themeCheckbox = document.getElementById("theme-checkbox");
+  const newTheme = themeCheckbox.checked ? "dark" : "light";
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("revanced_theme", newTheme);
 }
 
 // Modal (disclaimer)
@@ -232,8 +266,15 @@ function initModal() {
 // Init
 (function init() {
   applyInitialTheme();
-  document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+  document.getElementById("theme-checkbox").addEventListener("change", toggleTheme);
   initModal();
+  
+  const installTypeSelect = document.getElementById("install-type");
+  const architectureSelect = document.getElementById("architecture");
+
+  installTypeSelect.addEventListener("change", () => loadAllApps());
+  architectureSelect.addEventListener("change", () => loadAllApps());
+
   loadAllApps();
 
   // small UX: click handler for downloads to open in new tab by default (anchor target already _blank)
