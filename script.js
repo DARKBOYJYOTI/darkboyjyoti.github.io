@@ -98,6 +98,13 @@
         // Initialize page without heavy animations
         // Optimize page load performance
         document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('hidden');
+                preloader.addEventListener('transitionend', () => {
+                    preloader.remove();
+                });
+            }
             document.body.style.visibility = 'visible';
             applyInitialTheme();
             document.getElementById("theme-checkbox").addEventListener("change", toggleTheme);
