@@ -3,141 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator</title>
+    <title>Fixed QR Code Generator</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>QR Code Generator</h1>
-            <p>Generate QR codes for various types of content</p>
+            <div class="theme-switcher">
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round">
+                        <span class="slider-icon sun"><i class="fas fa-sun"></i></span>
+                        <span class="slider-icon moon"><i class="fas fa-moon"></i></span>
+                    </span>
+                </label>
+            </div>
         </header>
 
         <main>
             <div class="input-section">
-                <!-- Header Section -->
                 <div class="section-header">
                     <h2><i class="fas fa-cog"></i> Configuration</h2>
-                    <p>Customize your QR code settings</p>
                 </div>
 
-                <!-- Type and Content Section -->
-                <div class="main-inputs">
-                    <div class="input-group">
-                        <label for="qr-type">QR Code Type</label>
-                        <select id="qr-type" class="modern-select">
-                            <option value="text">📝 Text</option>
-                            <option value="url">🌐 URL</option>
-                            <option value="email">📧 Email</option>
-                            <option value="phone">📞 Phone</option>
-                            <option value="sms">💬 SMS</option>
-                            <option value="whatsapp">📱 WhatsApp</option>
-                            <option value="wifi">📶 WiFi</option>
-                            <option value="vcard">👤 vCard</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="content">Content</label>
-                        <textarea id="content" placeholder="Enter your content here..." class="modern-textarea"></textarea>
-                    </div>
+                <div class="input-group">
+                    <label for="qr-type">QR Code Type</label>
+                    <select id="qr-type" class="modern-select">
+                        <option value="text">📝 Text</option>
+                        <option value="url">🌐 URL</option>
+                        <option value="email">📧 Email</option>
+                        <option value="phone">📞 Phone</option>
+                        <option value="sms">💬 SMS</option>
+                        <option value="whatsapp">📱 WhatsApp</option>
+                        <option value="wifi">📶 WiFi</option>
+                        <option value="vcard">👤 vCard</option>
+                    </select>
                 </div>
 
-                <!-- Options Grid -->
+                <div id="dynamic-inputs"></div>
+
                 <div class="options-grid">
-                    <!-- Size & Format Card -->
                     <div class="option-card">
-                        <div class="card-header">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                            <h3>Size & Format</h3>
-                        </div>
+                        <h3><i class="fas fa-expand-arrows-alt"></i> Size & Format</h3>
                         <div class="card-content">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="size">Size</label>
                                     <select id="size" class="modern-select">
-                                        <option value="100">Small (100×100)</option>
-                                        <option value="200" selected>Medium (200×200)</option>
-                                        <option value="300">Large (300×300)</option>
-                                        <option value="400">Extra Large (400×400)</option>
-                                        <option value="custom">Custom Size</option>
+                                        <option value="100">Small</option>
+                                        <option value="200" selected>Medium</option>
+                                        <option value="300">Large</option>
+                                        <option value="custom">Custom</option>
                                     </select>
+                                </div>
+                                <div class="form-group" id="custom-size-inputs" style="display: none;">
+                                    <label for="custom-width">Custom Size</label>
+                                    <div class="custom-size-wrapper">
+                                        <input type="number" id="custom-width" placeholder="Width" min="50" max="1000" class="modern-input">
+                                        <input type="number" id="custom-height" placeholder="Height" min="50" max="1000" class="modern-input">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="download-format">Format</label>
                                     <select id="download-format" class="modern-select">
                                         <option value="png" selected>PNG</option>
                                         <option value="jpg">JPG</option>
-                                        <option value="webp">WebP</option>
-                                        <option value="svg">SVG</option>
+                                        <option value="webp">WEBP</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div id="custom-size-inputs" class="custom-size-wrapper" style="display: none;">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="number" id="custom-width" placeholder="Width (px)" min="50" max="1000" class="modern-input">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="number" id="custom-height" placeholder="Height (px)" min="50" max="1000" class="modern-input">
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Quality Card -->
                     <div class="option-card">
-                        <div class="card-header">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3>Quality</h3>
-                        </div>
+                        <h3><i class="fas fa-shield-alt"></i> Quality</h3>
                         <div class="card-content">
                             <div class="form-group">
                                 <label for="correction-level">Error Correction</label>
                                 <select id="correction-level" class="modern-select">
-                                    <option value="L">Low (7%)</option>
-                                    <option value="M" selected>Medium (15%)</option>
-                                    <option value="Q">Quartile (25%)</option>
-                                    <option value="H">High (30%)</option>
+                                    <option value="L">Low</option>
+                                    <option value="M" selected>Medium</option>
+                                    <option value="Q">Quartile</option>
+                                    <option value="H">High</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Colors Card -->
                     <div class="option-card">
-                        <div class="card-header">
-                            <i class="fas fa-palette"></i>
-                            <h3>Colors</h3>
-                        </div>
+                        <h3><i class="fas fa-palette"></i> Colors</h3>
                         <div class="card-content">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="foreground">Foreground</label>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="foreground" value="#000000" class="modern-color">
-                                        <span class="color-preview" id="foreground-preview"></span>
-                                    </div>
+                                    <div class="color-picker" id="foreground-picker"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="background">Background</label>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="background" value="#ffffff" class="modern-color">
-                                        <span class="color-preview" id="background-preview"></span>
-                                    </div>
+                                    <div class="color-picker" id="background-picker"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Generate Button -->
                 <div class="generate-section">
                     <button id="generate-btn" class="generate-btn">
                         <i class="fas fa-qrcode"></i>
                         Generate QR Code
+                    </button>
+                    <button id="reset-btn" class="reset-btn">
+                        <i class="fas fa-undo"></i>
+                        Reset
                     </button>
                 </div>
             </div>
@@ -145,26 +125,25 @@
             <div class="output-section">
                 <div class="section-header">
                     <h2><i class="fas fa-qrcode"></i> Generated QR Code</h2>
-                    <p>Your custom QR code will appear here</p>
                 </div>
                 
                 <div id="qr-result" class="qr-display">
                     <div class="qr-placeholder">
                         <i class="fas fa-qrcode"></i>
-                        <p>Generate a QR code to see it here</p>
+                        <p>Your QR code will appear here</p>
                     </div>
                 </div>
                 
                 <div class="actions">
-                    <button id="copy-btn" disabled class="action-btn copy-btn">
+                    <button id="copy-btn" disabled class="action-btn">
                         <i class="fas fa-copy"></i>
                         <span>Copy</span>
                     </button>
-                    <button id="download-btn" disabled class="action-btn download-btn">
+                    <button id="download-btn" disabled class="action-btn">
                         <i class="fas fa-download"></i>
                         <span>Download</span>
                     </button>
-                    <button id="share-btn" disabled class="action-btn share-btn">
+                    <button id="share-btn" disabled class="action-btn">
                         <i class="fas fa-share-alt"></i>
                         <span>Share</span>
                     </button>
@@ -174,10 +153,11 @@
     </div>
 
     <footer>
-        <p>Created with ❤️ by DarkBoyJyoti</p>
+        <p>Created with ❤️ by <a href="https://darkboyjyoti.github.io">Jyoti Karmakar</a></p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
