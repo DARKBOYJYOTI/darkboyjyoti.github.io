@@ -67,7 +67,7 @@ body{
 
 /* Buttons/links in header */
 .link-like{
-  background:transparent; border:none; color:var(--muted); cursor:pointer; font-weight:600;
+  background:transparent; border:none; color:var(--muted); cursor:pointer; font-weight:600; transition: color 0.3s ease;
 }
 
 /* Layout */
@@ -92,7 +92,7 @@ body{
 
 /* downloads buttons */
 .downloads{display:flex; gap:10px; flex-wrap:wrap; justify-content: center; margin-top: 15px;}
-.downloads a{display:inline-block; padding:10px 16px; border-radius:10px; text-decoration:none; color:white; font-weight:700; font-size:14px}
+.downloads a{display:inline-block; padding:10px 16px; border-radius:10px; text-decoration:none; color:white; font-weight:700; font-size:14px; transition: all 0.3s ease-in-out;}
 .card-youtube .downloads a{background:linear-gradient(90deg,var(--accent-yt), #ff6b6b)}
 .card-ytmusic .downloads a{background:linear-gradient(90deg,var(--accent-ytm), #ff7b7b)}
 .card-photos .downloads a{background:linear-gradient(90deg,var(--accent-photos), #6aa6ff)}
@@ -117,9 +117,7 @@ body{
 .footer-link {
   color: var(--accent-yt);
   text-decoration: none;
-}
-.footer-link:hover {
-  text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
 /* Modal */
@@ -240,4 +238,44 @@ input:checked + .slider:before {
 
 :root[data-theme="light"] {
     --header-bg: var(--card-dark);
+}
+
+/* Local PNG Icon Styling */
+.card-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  object-fit: cover;
+}
+
+/* Dark mode support for icons */
+[data-theme="dark"] .card-icon img {
+  filter: brightness(0.9);
+}
+
+@media (hover: hover) {
+  .footer-link:hover {
+    color: #e6352a;
+    text-decoration: underline;
+  }
+
+  .downloads a:hover {
+    filter: brightness(1.2);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  }
+
+  .link-like:hover {
+    color: var(--text);
+  }
+
+  .card-icon:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  [data-theme="dark"] .card-icon:hover img {
+    filter: brightness(1);
+  }
 }

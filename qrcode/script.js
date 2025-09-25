@@ -19,9 +19,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let qrCodeInstance = null;
 
     // --- Theme Switcher ---
-    themeToggle.addEventListener('change', () => {
-        document.documentElement.setAttribute('data-theme', themeToggle.checked ? 'dark' : 'light');
-    });
+    function applyInitialTheme() {
+        const root = document.documentElement;
+        const stored = localStorage.getItem("qrcode_theme");
+        const themeCheckbox = document.getElementById("theme-toggle");
+
+        if (stored) {
+            root.setAttribute("data-theme", stored);
+            if (stored === "dark") {
+                themeCheckbox.checked = true;
+            }
+            return;
+        }
+        // auto detect
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        root.setAttribute("data-theme", prefersDark ? "dark" : "light");
+        if (prefersDark) {
+            themeCheckbox.checked = true;
+        }
+    }
+
+    function toggleTheme() {
+        const root = document.documentElement;
+        const themeCheckbox = document.getElementById("theme-toggle");
+        const newTheme = themeCheckbox.checked ? "dark" : "light";
+        root.setAttribute("data-theme", newTheme);
+        localStorage.setItem("qrcode_theme", newTheme);
+    }
+
+    themeToggle.addEventListener('change', toggleTheme);
 
     // --- Color Pickers ---
     const createColorPicker = (selector, defaultColor) => {
@@ -176,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         correctionLevelSelect.value = 'M';
         foregroundPicker.setColor('#000000');
         backgroundPicker.setColor('#ffffff');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const showAlert = (message) => {
@@ -296,6 +323,11 @@ END:VCARD`;
                     downloadBtn.disabled = false;
                     copyBtn.disabled = false;
                     shareBtn.disabled = false;
+
+                    // Scroll to the QR code on mobile
+                    if (window.innerWidth < 768) {
+                        qrResult.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             }, 100);
         } catch (error) {
@@ -379,5 +411,6 @@ END:VCARD`;
     shareBtn.addEventListener('click', shareQrCode);
 
     // --- Initial Setup ---
+    applyInitialTheme();
     updateDynamicInputs();
 });
