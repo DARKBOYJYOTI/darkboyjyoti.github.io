@@ -1,0 +1,131 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+}
+
+/* Light Theme */
+[data-bs-theme="light"] {
+    --bs-body-bg: #FFFFFF;
+    --bs-body-color: #353535;
+    --bs-dark: #353535;
+    --bs-light: #FFFFFF;
+    background-color: #FFFFFF;
+}
+
+/* Dark Theme */
+[data-bs-theme="dark"] {
+    --bs-body-bg: #353535;
+    --bs-body-color: #FFFFFF;
+    --bs-dark: #FFFFFF;
+    --bs-light: #353535;
+    background-color: #353535;
+}
+
+[data-bs-theme="dark"] .card {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+}
+
+[data-bs-theme="dark"] .form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-bs-theme="dark"] .form-control::placeholder {
+    color: #bdc3c7;
+}
+
+[data-bs-theme="dark"] .dropdown-menu {
+    background-color: #353535;
+}
+
+[data-bs-theme="dark"] .dropdown-item {
+    color: #FFFFFF;
+}
+
+[data-bs-theme="dark"] .list-group-item {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+.navbar {
+    background-color: #353535 !important;
+}
+
+.navbar-brand i {
+    color: #FF6B01;
+}
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #353535 !important;
+}
+
+/* Theme Switcher Icon */
+#theme-switcher i {
+    color: #f1c40f; /* Sun color */
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+[data-bs-theme="dark"] #theme-switcher i {
+    color: #3498db; /* Moon color */
+    transform: rotate(360deg); /* Example animation */
+}
+
+@media (max-width: 767px) {
+    .row.mb-3 > div:first-child {
+        margin-bottom: 1rem;
+    }
+}
+
+#clear-query-desktop, #clear-query-mobile {
+    z-index: 10;
+}
+
+main.container {
+    padding-bottom: 100px;
+}
+
+#search-button-desktop, #search-button-mobile {
+    background-color: #FF6B01;
+    border-color: #FF6B01;
+}
+
+.dropdown-menu {
+    width: var(--bs-dropdown-width, 100%);
+}
+
+[data-bs-theme="dark"] .navbar, [data-bs-theme="dark"] .footer {
+    background-color: #424242 !important;
+}
+
+.d-grid {
+    position: relative;
+}
+
+@media (hover: hover) {
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+    .card.mt-4:hover {
+        transform: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+    [data-bs-theme="dark"] .dropdown-item:hover {
+        background-color: #4e6378;
+    }
+    .btn-primary:hover, .btn-primary:active {
+        background-color: #e65c00 !important;
+        border-color: #e65c00 !important;
+    }
+}

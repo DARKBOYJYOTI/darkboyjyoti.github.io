@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Open Directory Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-folder-symlink"></i>
+                Open Directory Finder
+            </a>
+            <div class="d-flex ms-auto">
+                <button id="theme-switcher" class="btn btn-link text-decoration-none">
+                    <i class="bi bi-sun-fill fs-4"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-5">
+                        <h1 class="card-title text-center mb-4">Search for anything</h1>
+                        <form id="search-form">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="file-type-button">
+                                            <i class="bi bi-file-earmark"></i> File Type
+                                        </button>
+                                        <ul class="dropdown-menu w-100" id="file-type-dropdown">
+                                            <li><a class="dropdown-item" href="#" data-file-type="mkv|mp4|avi|mov|mpg|wmv|divx|mpeg" data-res-type="video" data-glyph="film"><i class="bi bi-film"></i> TV/Movies/Video</a></li>
+                                            <li><a class="dropdown-item" href="#" data-file-type="MOBI|CBZ|CBR|CBC|CHM|EPUB|FB2|LIT|LRF|ODT|PDF|PRC|PDB|PML|RB|RTF|TCR|DOC|DOCX" data-res-type="ebook" data-glyph="book"><i class="bi bi-book"></i> Books</a></li>
+                                            <li><a class="dropdown-item" href="#" data-file-type="mp3|wav|ac3|ogg|flac|wma|m4a|aac|mod" data-res-type="audio" data-glyph="music"><i class="bi bi-music-note-beamed"></i> Music</a></li>
+                                            <li><a class="dropdown-item" href="#" data-file-type="exe|iso|dmg|tar|7z|bz2|gz|rar|zip|apk" data-res-type="archive" data-glyph="hdd-stack"><i class="bi bi-hdd-stack"></i> Software/ISO/DMG/Games</a></li>
+                                            <li><a class="dropdown-item" href="#" data-file-type="jpg|png|bmp|gif|tif|tiff|psd" data-res-type="picture" data-glyph="image"><i class="bi bi-image"></i> Images</a></li>
+                                            <li><a class="dropdown-item" href="#" data-file-type="-1" data-res-type="all" data-glyph="asterisk"><i class="bi bi-asterisk"></i> Other</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="engine-button">
+                                            Google
+                                        </button>
+                                        <ul class="dropdown-menu w-100" id="engine-dropdown">
+                                            <li><a class="dropdown-item" href="#" data-engine="google">Google</a></li>
+                                            <li><a class="dropdown-item" href="#" data-engine="bing">Bing</a></li>
+                                            <li><a class="dropdown-item" href="#" data-engine="duckduckgo">DuckDuckGo</a></li>
+                                            <li><a class="dropdown-item" href="#" data-engine="startpage">Startpage</a></li>
+                                            <li><a class="dropdown-item" href="#" data-engine="searx">Searx</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-none d-md-block">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="query-desktop" placeholder="e.g., The.Blacklist.S01.E01">
+                                    <button class="btn btn-outline-secondary" type="button" id="clear-query-desktop"><i class="bi bi-x-lg"></i></button>
+                                    <button class="btn btn-primary" type="submit" id="search-button-desktop">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-block d-md-none">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="query-mobile" placeholder="e.g., The.Blacklist.S01.E01">
+                                    <button class="btn btn-outline-secondary" type="button" id="clear-query-mobile"><i class="bi bi-x-lg"></i></button>
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary" type="submit" id="search-button-mobile">
+                                        <i class="bi bi-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mt-4 shadow-lg border-0">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-clock-history"></i>
+                                Recent Searches
+                            </h5>
+                            <button class="btn btn-sm btn-outline-danger" id="clear-history">
+                                <i class="bi bi-trash"></i> Clear History
+                            </button>
+                        </div>
+                        <ul class="list-group" id="search-history">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-dark text-white text-center">
+        <div class="container">
+            <span>Created with <i class="bi bi-heart-fill text-danger"></i> by <a href="https://darkboyjyoti.github.io" target="_blank" class="text-white text-decoration-none">Jyoti Karmakar</a></span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
