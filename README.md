@@ -18,7 +18,8 @@ I am **Jyoti Karmakar**, passionate about **education, open-source, and creating
 
 - [📥 ReVanced Apps Download](https://darkboyjyoti.github.io/revanced)  
 - [🔳 QR Code Generator](https://darkboyjyoti.github.io/qrcode)  
-
+- [📝 Text Styler](https://darkboyjyoti.github.io/unicode)  
+- [📂 Open Directory Finder](https://darkboyjyoti.github.io/opendirectory-finder)
 More experiments and tools coming soon... ✨  
 
 ---

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Text Styler</title>
+    <meta name="description" content="A fun and easy-to-use online text styler to convert your text into various Unicode styles like bold, italic, monospace, cursive, and more.">
+    <meta name="keywords" content="text styler, unicode text, bold text, italic text, monospace text, cursive text, double struck text, text converter, fancy text, text generator">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://darkboyjyoti.github.io/unicode/">
+    <meta property="og:title" content="Text Styler - Unicode Text Converter">
+    <meta property="og:description" content="A fun and easy-to-use online text styler to convert your text into various Unicode styles like bold, italic, monospace, cursive, and more.">
+    <meta property="og:image" content="https://darkboyjyoti.github.io/unicode/img/social-share.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://darkboyjyoti.github.io/unicode/">
+    <meta property="twitter:title" content="Text Styler - Unicode Text Converter">
+    <meta property="twitter:description" content="A fun and easy-to-use online text styler to convert your text into various Unicode styles like bold, italic, monospace, cursive, and more.">
+    <meta property="twitter:image" content="https://darkboyjyoti.github.io/unicode/img/social-share.png">
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" href="/img/fav.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>Text Styler</h1>
+            <p>A fun and easy-to-use text styler.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="input-section">
+            <textarea id="inputText" placeholder="Type or paste your text here..." rows="4"></textarea>
+            <div class="input-buttons">
+                <button id="pasteBtn" class="paste-btn">Paste</button>
+                <button id="submitBtn" class="submit-btn">Submit</button>
+                <button id="resetBtn" class="reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <div id="output" class="output-grid"></div>
+    </div>
+
+    <footer>
+        <p>Created with ❤️ by <a href="https://darkboyjyoti.github.io" target="_blank">Jyoti Karmakar</a></p>
+    </footer>
+
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" title="Go to top">&#8679;</button>
+
+    <script src="script.js" type="module" defer></script>
+
+</body>
+</html>
