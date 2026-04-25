@@ -1,0 +1,171 @@
+/* =====================================================
+   SCROLL-TRIGGERED ANIMATIONS
+   ===================================================== */
+
+/* Project Cards - Fade In Slide Up */
+.project-card {
+    opacity: 0 !important;
+    transform: translateY(30px) !important;
+    transition: opacity 1s ease, transform 1s ease !important;
+}
+
+.project-card.animate-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Skill Tags - Fade In Slide Up */
+.skill-tag {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    transition: opacity 0.8s ease, transform 0.8s ease !important;
+}
+
+.skill-tag.animate-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Social Links - Fade In Slide Up */
+.social-link {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    transition: opacity 0.8s ease, transform 0.8s ease !important;
+}
+
+.social-link.animate-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Contact Title - Glow Up Effect */
+.contact-title-animate {
+    opacity: 0 !important;
+    transform: scale(0.9) !important;
+    transition: opacity 1s ease, transform 1s ease !important;
+}
+
+.contact-title-animate.animate-visible {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+/* Contact Text - Typing Effect */
+.contact-text {
+    opacity: 0;
+    min-height: 4em;
+    /* Fixed height to prevent button shifting */
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .contact-text {
+        min-height: 5.5em;
+        /* More height on mobile for 2-line text */
+    }
+}
+
+.contact-text.typing-active {
+    opacity: 1;
+}
+
+.contact-text.typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+    color: var(--primary-600);
+}
+
+/* Send Email Button - Pulse Glow */
+.btn-glow-animate {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.btn-glow-animate.animate-visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Hero Text Glow Effects - Synced with Photo Pulse */
+.hero-title.text-glow,
+.hero-subtitle.text-glow,
+.hero-description.text-glow {
+    animation: textGlow 5s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+
+    /* Minimal glow when photo is normal size */
+    0% {
+        text-shadow: 0 0 5px rgba(59, 130, 246, 0.2),
+            0 0 10px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Maximum glow when photo zooms IN */
+    50% {
+        text-shadow: 0 0 25px rgba(59, 130, 246, 0.8),
+            0 0 40px rgba(59, 130, 246, 0.5),
+            0 0 60px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Back to minimal when photo zooms OUT */
+    100% {
+        text-shadow: 0 0 5px rgba(59, 130, 246, 0.2),
+            0 0 10px rgba(59, 130, 246, 0.1);
+    }
+}
+
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.2);
+    }
+}
+
+/* =====================================================
+   DYNAMIC SECTION LOADING
+   ===================================================== */
+
+/* Sections start hidden and load on scroll */
+.section-lazy {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.section-lazy.section-loaded {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Loading indicator for sections */
+.section-loading {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-loading::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(59, 130, 246, 0.1);
+    border-top-color: rgba(59, 130, 246, 0.6);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

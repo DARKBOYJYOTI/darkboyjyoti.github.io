@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" type="image/png" href="fav.png">
+  <title>ReVanced Downloader</title>
+  <link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+  <header class="site-header">
+    <div class="left">
+      <div class="title">ReVanced <span class="title-break">Downloader</span></div>
+    </div>
+    <div class="right">
+      <label class="theme-switch" for="theme-checkbox">
+        <input type="checkbox" id="theme-checkbox" />
+        <div class="slider round"></div>
+      </label>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <div class="control-group">
+        <label for="install-type">Installation Type:</label>
+        <select id="install-type">
+          <option value="non-root" selected>Non-Rooted</option>
+          <option value="root">Rooted (Magisk)</option>
+        </select>
+      </div>
+      <div class="control-group" id="arch-select-group">
+        <label for="architecture">Architecture:</label>
+        <select id="architecture">
+          <option value="arm64" selected>ARM64</option>
+          <option value="arm">ARM</option>
+        </select>
+      </div>
+    </section>
+    <section class="grid" id="cards">
+      <!-- Cards will be populated in HTML for accessibility, JS will fill downloads -->
+      <article class="card card-youtube" id="card-youtube">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/youtube.png" alt="YouTube" loading="lazy">
+          </div>
+          <h3>YouTube (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="youtube-meta"></div>
+          <div class="downloads" id="youtube-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-ytmusic" id="card-ytmusic">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/youtube-music.png" alt="YouTube Music" loading="lazy">
+          </div>
+          <h3>YouTube Music (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="ytmusic-meta"></div>
+          <div class="downloads" id="ytmusic-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-photos" id="card-photos">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/google-photos.png" alt="Google Photos" loading="lazy">
+          </div>
+          <h3>Google Photos (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="photos-meta"></div>
+          <div class="downloads" id="photos-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-spotify" id="card-spotify">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/spotify.png" alt="Spotify" loading="lazy">
+          </div>
+          <h3>Spotify (ReVanced)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="spotify-meta"></div>
+          <div class="downloads" id="spotify-downloads">Loading...</div>
+        </div>
+      </article>
+
+      <article class="card card-microg" id="card-microg">
+        <div class="card-head">
+          <div class="card-icon">
+            <img src="icons/microg.png" alt="MicroG" loading="lazy">
+          </div>
+          <h3>MicroG (Required)</h3>
+        </div>
+        <div class="card-body">
+          <div class="meta" id="microg-meta"></div>
+          <div class="downloads" id="microg-downloads">Loading...</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="notes">
+      <strong>Note:</strong> This page is a convenience UI that fetches release assets from GitHub. I am <em>not</em> the mod author. Verify checksums and use at your own risk.
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <button id="open-disclaimer" class="link-like">Disclaimer</button>
+    </div>
+    <div>
+      Made with ❤️ by <strong><a href="https://darkboyjyoti.github.io" target="_blank" rel="noopener noreferrer" class="footer-link">Jyoti Karmakar</a></strong>
+    </div>
+  </footer>
+
+
+  <!-- Disclaimer Modal -->
+  <div id="disclaimer-modal" class="modal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="disc-title">
+      <button id="close-disclaimer" class="modal-close" aria-label="Close">✕</button>
+      <h2 id="disc-title">Disclaimer & Source</h2>
+      <p>
+        I am not the original mod author. This page fetches release assets directly from the repositories
+        below and simply exposes convenient download links. Always verify signatures and checksums before installing.
+      </p>
+      <ul>
+        <li>ReVanced builds: <a href="https://github.com/j-hc/revanced-magisk-module" target="_blank" rel="noopener">github.com/j-hc/revanced-magisk-module</a></li>
+        <li>MicroG (GmsCore): <a href="https://github.com/ReVanced/GmsCore/releases" target="_blank" rel="noopener">github.com/ReVanced/GmsCore</a></li>
+      </ul>
+      <div style="text-align:right">
+        <button id="ack-disclaimer" class="btn">I understand</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

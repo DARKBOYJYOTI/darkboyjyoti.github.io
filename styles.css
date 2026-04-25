@@ -1,0 +1,1649 @@
+/* ===========================================
+   PROFESSIONAL PORTFOLIO - ENHANCED HERO
+   Fullscreen hero with navigation
+   =========================================== */
+
+:root {
+    --primary-900: #0a2540;
+    --primary-800: #103d5e;
+    --primary-700: #1a5178;
+    --primary-600: #2563eb;
+    --primary-500: #3b82f6;
+
+    --neutral-50: #f8fafc;
+    --neutral-100: #f1f5f9;
+    --neutral-200: #e2e8f0;
+    --neutral-700: #334155;
+    --neutral-900: #0f172a;
+
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --border-color: #e2e8f0;
+
+    /* Slightly darker glass in light mode for visibility */
+    --glass-bg: rgba(241, 245, 249, 0.85);
+    --nav-bg: rgba(255, 255, 255, 0.90);
+
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+    --neutral-50: #1e293b;
+    --neutral-100: #334155;
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+
+    /* Dark Mode Theme Colors */
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    /* More opaque to distinct from background */
+}
+
+/* Improve dark mode readability */
+body.dark-mode {
+    color: #e2e8f0;
+}
+
+body.dark-mode .project-description,
+body.dark-mode .contact-text {
+    color: #cbd5e1;
+}
+
+/* =====================================================
+   GLOBAL RESET + EXTRA SMOOTHNESS (OPTIONAL – ENABLED)
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    /* 🟢 Extra smoothness */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    /* Fix white side bars */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@supports (-moz-appearance: none) {
+    html {
+        scroll-behavior: auto;
+        /* Firefox Android fix */
+    }
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    /* Smooth theme transition */
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+
+
+/* Skip to Content Link - Accessibility */
+.skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--primary-600);
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 10000;
+    transition: top 0.3s;
+    opacity: 0;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    opacity: 1;
+}
+
+/* Navigation */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    /* Added shadow for separation */
+    transform: translateY(-100%);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.nav.visible {
+    transform: translateY(0);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    /* Mobile default */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding 0.3s ease;
+}
+
+@media (min-width: 769px) {
+    .nav-container {
+        padding: 1.5rem 2rem;
+        /* Increased desktop vertical size */
+    }
+
+    .nav.visible .nav-container {
+        padding: 1.25rem 2rem;
+        /* Slightly smaller on scroll for elegance */
+    }
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.nav-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .desktop-nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: color 0.2s;
+}
+
+@media (hover: hover) {
+    .nav-links a:hover {
+        color: var(--primary-600);
+    }
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: var(--neutral-100);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+    flex-shrink: 0;
+}
+
+@media (hover: hover) {
+    .theme-toggle:hover {
+        background: var(--primary-600);
+        color: white;
+    }
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Mobile Navigation Controls */
+.mobile-nav-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+@media (min-width: 769px) {
+    .mobile-nav-controls {
+        display: none;
+    }
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s;
+    border-radius: 2px;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+}
+
+.mobile-menu.active {
+    max-height: 300px;
+}
+
+.mobile-menu-link {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+@media (hover: hover) {
+    .mobile-menu-link:hover {
+        background: var(--neutral-50);
+        color: var(--primary-600);
+    }
+}
+
+.mobile-menu-link:active {
+    background: var(--neutral-100);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.container-small {
+    max-width: 800px;
+}
+
+/* Hero Section - Fullscreen */
+/* =====================================================
+   HERO – MOBILE SAFE VIEWPORT HEIGHT FIX
+   ===================================================== */
+
+.hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    /* Dynamic viewport height for perfect mobile fit */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-800) 100%);
+    color: white;
+    padding: 2rem 0;
+    padding-bottom: 6rem;
+    overflow: hidden;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-bottom: 9rem;
+        /* EXTRA space for mobile arrow + safe area */
+    }
+}
+
+/* Profile Container with Theme Toggle */
+.hero-profile-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+    z-index: 2;
+    /* Ensure text sits above canvas */
+}
+
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 105%;
+    /* Bleed to cover bottom gaps */
+    z-index: 1;
+    pointer-events: all;
+    display: block;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    /* Static blue glow - doesn't animate */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(59, 130, 246, 0.5),
+        0 0 40px rgba(59, 130, 246, 0.3);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    will-change: transform, opacity;
+    transform-origin: center center;
+}
+
+
+@media (min-width: 769px) {
+    .hero-image {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-image {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 375px) {
+    .hero-image {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+/* Removed Hero Theme Toggle */
+.hero-theme-toggle {
+    display: none;
+}
+
+/* Hero Text Elements Initial State */
+.hero-title,
+.hero-subtitle,
+.hero-description {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: transform, opacity;
+}
+
+/* Active State for Animations */
+/* Active State for Animations - Refactored to allow Pulse */
+.hero-element-active {
+    opacity: 1 !important;
+}
+
+/* Slide Up Entrance for Text & Buttons */
+.hero-title.hero-element-active,
+.hero-subtitle.hero-element-active,
+.hero-description.hero-element-active,
+.hero-nav-btn.hero-element-active {
+    transform: translateY(0);
+}
+
+/* Zoom In Entrance for Image */
+.hero-image.hero-element-active {
+    transform: scale(1);
+}
+
+/* Pulse Animation with Glow - Synced breathing effect */
+.hero-image.pulse-active {
+    animation: zoomPulseWithGlow 5s infinite ease-in-out;
+}
+
+@keyframes zoomPulseWithGlow {
+
+    /* Start: Normal size */
+    0% {
+        transform: scale(1);
+    }
+
+    /* Mid: Fully zoomed in - synced with name glow peak */
+    50% {
+        transform: scale(1.08);
+    }
+
+    /* End: Back to normal */
+    100% {
+        transform: scale(1);
+    }
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.hero-description {
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    min-height: 3em;
+    /* Prevent layout shift during typing */
+    /* Opacity handled by group rule above (0 initially) */
+}
+
+/* Cursor for typing animation */
+.hero-description.typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+    color: var(--primary-500);
+}
+
+@media (min-width: 769px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.375rem;
+    }
+}
+
+
+
+@media (min-width: 769px) {
+    .hero-profile-container {
+        margin-bottom: 2rem;
+    }
+}
+
+/* About Section */
+.about-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.about-text {
+    margin-bottom: 1.5rem;
+    min-height: 1.8em;
+    /* Smooth reveal animation */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.about-text.about-text-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (min-width: 769px) {
+    .hero-description {
+        font-size: 1.125rem;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.75rem;
+        /* Increased size */
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        /* Increased size */
+        margin-top: 0.5rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        min-height: 4.5em;
+        /* Increase for mobile to prevent shift */
+    }
+}
+
+/* Scroll Down Arrow */
+/* Scroll Down Arrow - Global Stable Position */
+.scroll-down {
+    position: absolute;
+    /* Always absolute for stability */
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Animation moved to child to prevent transform conflict */
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: none;
+    border: none;
+    transition: color 0.3s;
+    z-index: 10;
+    margin-top: 0;
+}
+
+/* Animate the icon instead of the button wrapper */
+.scroll-down i {
+    animation: bounce 2s infinite;
+}
+
+/* Ensure more space on mobile to prevent overlap with content */
+@media (max-width: 768px) {
+    .scroll-down {
+        bottom: 3rem;
+        /* Lowered from 5rem for better aesthetics while safe */
+    }
+}
+
+.scroll-down:hover {
+    color: white;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Glassmorphism for Hero Buttons */
+.hero-nav-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+    /* Keep horizontal on mobile */
+    max-width: 700px;
+    margin: 0 auto;
+    overflow-x: auto;
+    /* Scroll if needed */
+    padding: 0 1rem;
+}
+
+.hero-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.75rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.3s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: var(--shadow-md);
+    border: none;
+    white-space: nowrap;
+    /* Prevent text wrapping */
+}
+
+/* Buttons initially hidden for sequence */
+.hero-nav-btn {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: transform, opacity;
+}
+
+.hero-btn-projects {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.hero-btn-expertise {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.hero-btn-connect {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.hero-btn-contact {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+@media (hover: hover) {
+    .hero-nav-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        filter: brightness(1.1);
+    }
+}
+
+.hero-nav-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.hero-nav-btn i {
+    font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+    .hero-nav-buttons {
+        gap: 0.75rem;
+        padding: 0 0.5rem;
+    }
+
+    .hero-nav-btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.8125rem;
+        flex-shrink: 0;
+        /* Don't shrink buttons */
+    }
+
+    .hero-nav-btn i {
+        font-size: 0.9375rem;
+    }
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+    transform: scale(0.98) !important;
+}
+
+.btn-primary {
+    background: white;
+    color: var(--primary-900);
+}
+
+@media (hover: hover) {
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+/* Sections */
+.section {
+    padding: var(--spacing-2xl) 0;
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 2.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 2rem 0;
+    }
+}
+
+.section-alt {
+    background: var(--bg-primary);
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.section-title span {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.section-title span::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-600);
+    border-radius: 2px;
+}
+
+/* Scroll Offset for Navigation */
+.section {
+    padding: var(--spacing-2xl) 0;
+    scroll-margin-top: 80px;
+    /* Ensures header doesn't cover title on click */
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    /* Reduced from 280px */
+    gap: 1.5rem;
+}
+
+.project-card {
+    background: var(--glass-bg);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+    position: relative;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+@media (hover: hover) {
+    .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary-600);
+    }
+}
+
+.project-card:active {
+    transform: translateY(-2px) !important;
+}
+
+.project-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-600);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.project-description {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.project-arrow {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: var(--primary-600);
+    font-size: 1.25rem;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.project-card:hover .project-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+/* 🎨 Unique Project Themes */
+.project-easywinget {
+    border-top: 4px solid #0078d4;
+    /* Windows 11 Blue */
+    background: linear-gradient(to bottom right, rgba(0, 120, 212, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.project-easywinget .project-icon {
+    background: linear-gradient(135deg, #0078d4, #005a9e);
+    box-shadow: 0 4px 10px rgba(0, 120, 212, 0.3);
+}
+
+.project-revanced {
+    border-top: 4px solid #ff0000;
+    /* YouTube Red */
+    background: linear-gradient(to bottom right, rgba(255, 0, 0, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.project-revanced .project-icon {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+}
+
+.project-qrcode {
+    border-top: 4px solid #2563eb;
+    /* Blue */
+    background: linear-gradient(to bottom right, rgba(37, 99, 235, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.project-qrcode .project-icon {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.project-directory {
+    border-top: 4px solid #f59e0b;
+    /* Amber (Unchanged) */
+    background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.project-directory .project-icon {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.project-textstyler {
+    border-top: 4px solid #10b981;
+    /* Green */
+    background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.project-textstyler .project-icon {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+/* Dark Mode Adjustments for Projects */
+body.dark-mode .project-easywinget {
+    background: linear-gradient(to bottom right, rgba(0, 120, 212, 0.15), rgba(30, 41, 59, 0.6));
+}
+
+body.dark-mode .project-revanced {
+    background: linear-gradient(to bottom right, rgba(255, 0, 0, 0.15), rgba(30, 41, 59, 0.6));
+}
+
+body.dark-mode .project-qrcode {
+    background: linear-gradient(to bottom right, rgba(37, 99, 235, 0.15), rgba(30, 41, 59, 0.6));
+}
+
+body.dark-mode .project-directory {
+    background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.15), rgba(30, 41, 59, 0.6));
+}
+
+body.dark-mode .project-textstyler {
+    background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.15), rgba(30, 41, 59, 0.6));
+}
+
+/* Card Hover Boost */
+@media (hover: hover) {
+    .project-card:hover {
+        transform: translateY(-6px) !important;
+        box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+        filter: brightness(1.02);
+    }
+}
+
+/* =====================================================
+   SKILLS GRID – PERFECT CENTERING (DESKTOP + MOBILE)
+   ===================================================== */
+
+/* Desktop & large screens */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+    justify-items: center;
+    /* Centers items in their cells */
+}
+
+/* Skill card */
+.skill-tag {
+    width: 100%;
+    max-width: 300px;
+    min-height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    padding: 0.875rem 1.25rem;
+    border-radius: 0.75rem;
+
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    /* Restore visual styles */
+    color: white;
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+/* Icons */
+.skill-tag i {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+}
+
+
+
+@media (hover: hover) {
+    .skill-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+}
+
+.skill-tag:active {
+    transform: scale(0.98) !important;
+}
+
+
+
+.skill-education {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.skill-content {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.skill-marketing {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.skill-management {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.skill-communication {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.skill-research {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+/* Social Links */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+
+    background: var(--glass-bg);
+    border: none;
+    border-radius: 0.75rem;
+
+    font: inherit;
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+@media (hover: hover) {
+    .social-link:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+}
+
+.social-link:active {
+    transform: scale(0.96);
+}
+
+.social-link:active {
+    transform: scale(0.98) !important;
+}
+
+.social-link i {
+    font-size: 1.5rem;
+}
+
+/* Old social color overrides removed (consolidated in touch fix block) */
+
+/* Contact Section */
+.section-contact {
+    background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-800) 100%);
+    color: white;
+    text-align: center;
+}
+
+.section-contact .section-title {
+    color: white;
+}
+
+.contact-text {
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .contact-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Footer */
+/* Footer */
+.footer {
+    position: relative;
+    z-index: 10;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    /* Better grid for small screens */
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Keep socials compact (2 per row) instead of stacking 1 per row */
+    .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .social-grid .social-link {
+        justify-content: center;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+        /* Reduced from 2.75rem to prevent wrapping */
+    }
+
+    .project-card {
+        padding: 1.5rem;
+    }
+
+    /* Mobile Menu fix for overflow */
+    .mobile-menu.active {
+        max-height: 80vh;
+        /* Better than fixed 300px */
+        overflow-y: auto;
+    }
+
+    .contact-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .contact-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Accessibility */
+:focus-visible {
+    outline: 3px solid var(--primary-600);
+    outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--primary-600);
+    outline-offset: 3px;
+}
+
+/* Ensure minimum tap target size for touch devices */
+@media (pointer: coarse) {
+
+    button,
+    a.btn,
+    .theme-toggle,
+    .hero-theme-toggle,
+    .menu-toggle {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =====================================================
+   BACKDROP FILTER – FIREFOX SAFE FALLBACK
+   ===================================================== */
+
+@supports not (-webkit-backdrop-filter: blur(10px)) {
+
+    .nav,
+    .project-card,
+    .social-link {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: var(--bg-primary);
+    }
+}
+
+
+
+/* =====================================================
+   PERFORMANCE BOOST – GPU HINTING
+   ===================================================== */
+
+.project-card,
+.skill-tag,
+.hero-nav-btn,
+.social-link {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Firefox: Remove will-change to reduce jitter */
+@supports (-moz-appearance: none) {
+
+    .project-card,
+    .skill-tag,
+    .hero-nav-btn,
+    .social-link,
+    .hero-image {
+        will-change: auto;
+    }
+}
+
+
+
+/* =====================================================
+   STICKY HOVER / ACTIVE / FOCUS FIX FOR TOUCH DEVICES
+   ===================================================== */
+
+/* -----------------------------------------------------
+   1️⃣ Apply hover effects ONLY on real hover devices
+   (Desktop mouse / trackpad)
+----------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+
+    .btn:hover,
+    .hero-nav-btn:hover,
+    .project-card:hover,
+    .skill-tag:hover,
+    .social-link:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        filter: brightness(1.05);
+    }
+}
+
+/* 🎨 Social Brand Colors */
+.social-facebook {
+    border: 2px solid rgba(24, 119, 242, 0.3);
+    background: rgba(24, 119, 242, 0.05);
+}
+
+.social-facebook i,
+.social-facebook span {
+    color: #1877f2;
+}
+
+.social-instagram {
+    border: 2px solid rgba(225, 48, 108, 0.3);
+    background: rgba(225, 48, 108, 0.05);
+}
+
+.social-instagram i,
+.social-instagram span {
+    color: #e1306c;
+}
+
+.social-linkedin {
+    border: 2px solid rgba(0, 119, 181, 0.3);
+    background: rgba(0, 119, 181, 0.05);
+}
+
+.social-linkedin i,
+.social-linkedin span {
+    color: #0077b5;
+}
+
+.social-youtube {
+    border: 2px solid rgba(255, 0, 0, 0.3);
+    background: rgba(255, 0, 0, 0.05);
+}
+
+.social-youtube i,
+.social-youtube span {
+    color: #ff0000;
+}
+
+.social-whatsapp {
+    border: 2px solid rgba(37, 211, 102, 0.3);
+    background: rgba(37, 211, 102, 0.05);
+}
+
+.social-whatsapp i,
+.social-whatsapp span {
+    color: #25d366;
+}
+
+.social-telegram {
+    border: 2px solid rgba(0, 136, 204, 0.3);
+    background: rgba(0, 136, 204, 0.05);
+}
+
+.social-telegram i,
+.social-telegram span {
+    color: #0088cc;
+}
+
+/* 🌙 Dark Mode Social Colors (Better Visibility) */
+body.dark-mode .social-facebook {
+    background: rgba(24, 119, 242, 0.15);
+    border-color: rgba(24, 119, 242, 0.4);
+    border-width: 2px;
+}
+
+body.dark-mode .social-facebook i,
+body.dark-mode .social-facebook span {
+    color: #5aa7ff;
+}
+
+body.dark-mode .social-instagram {
+    background: rgba(225, 48, 108, 0.15);
+    border-color: rgba(225, 48, 108, 0.4);
+    border-width: 2px;
+}
+
+body.dark-mode .social-instagram i,
+body.dark-mode .social-instagram span {
+    color: #ff70a6;
+}
+
+body.dark-mode .social-linkedin {
+    background: rgba(0, 119, 181, 0.15);
+    border-color: rgba(0, 119, 181, 0.4);
+    border-width: 2px;
+}
+
+body.dark-mode .social-linkedin i,
+body.dark-mode .social-linkedin span {
+    color: #4db4ea;
+}
+
+body.dark-mode .social-youtube {
+    background: rgba(255, 0, 0, 0.15);
+    border-color: rgba(255, 0, 0, 0.4);
+    border-width: 2px;
+}
+
+body.dark-mode .social-youtube i,
+body.dark-mode .social-youtube span {
+    color: #ff6666;
+}
+
+body.dark-mode .social-whatsapp {
+    background: rgba(37, 211, 102, 0.15);
+    border-color: rgba(37, 211, 102, 0.4);
+    border-width: 2px;
+}
+
+body.dark-mode .social-whatsapp i,
+body.dark-mode .social-whatsapp span {
+    color: #5cff95;
+}
+
+body.dark-mode .social-telegram {
+    background: rgba(0, 136, 204, 0.15);
+    border-color: rgba(0, 136, 204, 0.4);
+    border-width: 2px;
+}
+
+body.dark-mode .social-telegram i,
+body.dark-mode .social-telegram span {
+    color: #5cd6ff;
+}
+
+/* -----------------------------------------------------
+   2️⃣ Touch devices: remove hover persistence
+----------------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Force reset for social links to prevent brand color sticky state */
+    .social-link {
+        background: var(--glass-bg) !important;
+        transform: none !important;
+        box-shadow: none !important;
+        transition: none !important;
+    }
+
+    /* Force reset for Project Cards to prevent sticky hover state */
+    .project-card,
+    .project-easywinget,
+    .project-revanced,
+    .project-qrcode,
+    .project-directory,
+    .project-textstyler {
+        transform: none !important;
+        box-shadow: none !important;
+        /* Remove lift shadow */
+        filter: none;
+        transition: none !important;
+        /* Note: We keep the background gradient as it's the default state,
+           but disable the hover 'lift' and 'brightness' filter */
+    }
+
+    .btn,
+    .hero-nav-btn,
+    .skill-tag {
+        transform: none !important;
+        box-shadow: var(--shadow-md);
+        filter: none;
+        transition: none !important;
+    }
+
+    /* Fast, safe tap feedback */
+    .btn:active,
+    .hero-nav-btn:active,
+    .skill-tag:active,
+    .social-link:active,
+    .project-card:active {
+        transform: scale(0.96) !important;
+        opacity: 0.9;
+    }
+}
+
+/* -----------------------------------------------------
+   3️⃣ Kill sticky :focus after tap (CRITICAL)
+----------------------------------------------------- */
+button,
+a {
+    outline: none;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* -----------------------------------------------------
+   4️⃣ Firefox Android hard reset (worst offender)
+----------------------------------------------------- */
+@supports (-moz-appearance: none) {
+
+    .btn,
+    .hero-nav-btn,
+    .project-card,
+    .skill-tag,
+    .social-link {
+        transform: none !important;
+        box-shadow: none !important;
+        filter: none !important;
+    }
+
+    button,
+    a {
+        -moz-user-focus: ignore;
+    }
+}
+
+/* =====================================================
+   FIREFOX-SPECIFIC HARD FIX
+   ===================================================== */
+
+@supports (-moz-appearance: none) {
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    }
+
+    .skill-tag {
+        min-height: 58px;
+    }
+}
+
+
+
+/* =====================================================
+   RESPONSIVE BREAKPOINTS
+   ===================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-tag {
+        max-width: 100%;
+    }
+}
+
+/* =====================================================
+   PERFORMANCE OPTIMIZATIONS
+   ===================================================== */
+
+/* GPU Acceleration for animated elements */
+.project-card,
+.skill-tag,
+.social-link,
+.about-text {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimize animations to use only transform and opacity */
+.animate-visible {
+    contain: layout;
+}
+
+/* =====================================================
+   ACCESSIBILITY - REDUCED MOTION SUPPORT
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Disable pulse animation for reduced motion */
+    .hero-image.pulse-active {
+        animation: none !important;
+    }
+
+    /* Disable scroll animations */
+    .scroll-down {
+        animation: none !important;
+    }
+
+    /* Instant transitions for reduced motion */
+    .hero-title,
+    .hero-subtitle,
+    .hero-description,
+    .hero-nav-btn,
+    .hero-image {
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =====================================================
+   BATTERY SAVING - PAUSE ANIMATIONS WHEN TAB HIDDEN
+   Handled by JavaScript visibility API
+   ===================================================== */

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a2540">
+    <meta name="description"
+        content="Jyoti Karmakar - Educational Professional & Digital Creator. Building meaningful digital experiences and contributing to open source projects.">
+    <meta name="author" content="Jyoti Karmakar">
+    <meta name="keywords"
+        content="Jyoti Karmakar, Educational Professional, Digital Creator, Portfolio, Web Developer, Content Creator">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://darkboyjyoti.github.io/">
+    <meta property="og:title" content="Jyoti Karmakar - Portfolio">
+    <meta property="og:description"
+        content="Educational Professional & Digital Creator. Building meaningful digital experiences and contributing to open source projects.">
+    <meta property="og:image" content="https://darkboyjyoti.github.io/profile.jpeg">
+    <link rel="icon" type="image/jpeg" href="profile.jpeg">
+    <link rel="canonical" href="https://darkboyjyoti.github.io/">
+    <meta name="robots" content="index, follow">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://darkboyjyoti.github.io/">
+    <meta property="twitter:title" content="Jyoti Karmakar - Portfolio">
+    <meta property="twitter:description"
+        content="Educational Professional & Digital Creator. Building meaningful digital experiences and contributing to open source projects.">
+    <meta property="twitter:image" content="https://darkboyjyoti.github.io/profile.jpeg">
+
+    <title>Jyoti Karmakar - Educational Professional & Digital Creator Portfolio</title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jyoti Karmakar",
+        "jobTitle": "Educational Professional & Digital Creator",
+        "url": "https://darkboyjyoti.github.io",
+        "image": "https://darkboyjyoti.github.io/profile.jpeg",
+        "sameAs": [
+            "https://www.facebook.com/DARKBOYJYOTI/",
+            "https://www.instagram.com/darkboyjyoti/",
+            "https://www.linkedin.com/in/jyoti-karmakar-42475b117/",
+            "https://youtube.com/karmakarjyoti777",
+            "https://t.me/DARKBOYJYOTI"
+        ],
+        "description": "Educational Professional & Digital Creator. Building meaningful digital experiences and contributing to open source projects."
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="scroll-animations.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body class="light-mode">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <!-- Navigation - Shows on scroll -->
+    <nav class="nav" id="mainNav">
+        <div class="nav-container">
+            <a href="#" class="nav-brand">
+                <img src="profile.jpeg" alt="Jyoti Karmakar profile picture" class="nav-avatar">
+                <span class="nav-name">Jyoti Karmakar</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="nav-links desktop-nav">
+                <a href="#projects">Projects</a>
+                <a href="#skills">Expertise</a>
+                <a href="#connect">Connect</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-nav-controls">
+                <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#projects" class="mobile-menu-link">Projects</a>
+            <a href="#skills" class="mobile-menu-link">Expertise</a>
+            <a href="#connect" class="mobile-menu-link">Connect</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section - Full Screen -->
+        <section class="hero" aria-label="Introduction">
+            <canvas id="hero-canvas" aria-label="Interactive particle animation background">
+                Your browser does not support the canvas element.
+            </canvas>
+            <div class="container">
+                <!-- Profile with Theme Toggle -->
+                <div class="hero-profile-container">
+                    <img src="profile.jpeg" alt="Jyoti Karmakar" class="hero-image">
+                </div>
+
+                <h1 class="hero-title">Jyoti Karmakar</h1>
+                <p class="hero-subtitle">Educational Professional & Digital Creator</p>
+                <p class="hero-description">Building meaningful digital experiences and contributing to open-source
+                    projects</p>
+                <!-- Navigation Buttons in Hero -->
+                <div class="hero-nav-buttons">
+                    <a href="#projects" class="hero-nav-btn hero-btn-projects">
+                        <i class="fas fa-folder"></i>
+                        Projects
+                    </a>
+                    <a href="#skills" class="hero-nav-btn hero-btn-expertise">
+                        <i class="fas fa-graduation-cap"></i>
+                        Expertise
+                    </a>
+                    <a href="#connect" class="hero-nav-btn hero-btn-connect">
+                        <i class="fas fa-share-alt"></i>
+                        Connect
+                    </a>
+                </div>
+            </div>
+
+            <button class="scroll-down" aria-label="Scroll Down" id="scrollDownBtn">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title"><span>About Me</span></h2>
+                <div class="about-content">
+                    <p class="about-text"
+                        data-text="Hello! I’m Jyoti Karmakar, a passionate Educational Professional, Digital Creator, and Technical Assistant with a strong focus on building secure, practical, and user-friendly digital solutions. I believe technology should not only look good but also solve real-world problems efficiently and reliably.">
+                    </p>
+                    <p class="about-text"
+                        data-text="With hands-on experience across web development, automation, system optimization, and AI-powered tools, I enjoy working at the intersection of functionality, performance, and clean design. My work reflects a deep interest in creating systems that are bank-grade, stable, and scalable, especially for environments where accuracy and security matter the most.">
+                    </p>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title"><span>Featured Projects</span></h2>
+
+                <div class="projects-grid">
+
+                    <a href="https://github.com/DARKBOYJYOTI/EasyWinget" class="project-card project-easywinget" target="_blank">
+                        <div class="project-icon">
+                            <i class="fab fa-windows"></i>
+                        </div>
+                        <h3 class="project-title">EasyWinGet</h3>
+                        <p class="project-description">The Modern GUI for Windows Package Manager</p>
+                        <div class="project-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="revanced" class="project-card project-revanced">
+                        <div class="project-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="project-title">ReVanced Apps</h3>
+                        <p class="project-description">Modified Android apps with enhanced features and capabilities</p>
+                        <div class="project-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="qrcode" class="project-card project-qrcode">
+                        <div class="project-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <h3 class="project-title">QR Code Generator</h3>
+                        <p class="project-description">Generate custom QR codes for URLs, text, and more</p>
+                        <div class="project-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="opendirectory-finder" class="project-card project-directory">
+                        <div class="project-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3 class="project-title">Directory Finder</h3>
+                        <p class="project-description">Discover and explore open web directories</p>
+                        <div class="project-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="unicode" class="project-card project-textstyler">
+                        <div class="project-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <h3 class="project-title">Text Styler</h3>
+                        <p class="project-description">Transform and style your text for social media</p>
+                        <div class="project-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title"><span>Expertise</span></h2>
+                <div class="skills-grid">
+                    <div class="skill-tag skill-education">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Education</span>
+                    </div>
+                    <div class="skill-tag skill-content">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>Content Creation</span>
+                    </div>
+                    <div class="skill-tag skill-marketing">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Digital Marketing</span>
+                    </div>
+                    <div class="skill-tag skill-management">
+                        <i class="fas fa-tasks"></i>
+                        <span>Project Management</span>
+                    </div>
+                    <div class="skill-tag skill-communication">
+                        <i class="fas fa-comments"></i>
+                        <span>Communication</span>
+                    </div>
+                    <div class="skill-tag skill-research">
+                        <i class="fas fa-search"></i>
+                        <span>Research</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Links -->
+        <section id="connect" class="section">
+            <div class="container">
+                <h2 class="section-title"><span>Connect</span></h2>
+                <div class="social-grid">
+                    <a href="https://www.facebook.com/DARKBOYJYOTI/" target="_blank" rel="noopener noreferrer"
+                        class="social-link social-facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/darkboyjyoti/" target="_blank" rel="noopener noreferrer"
+                        class="social-link social-instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/jyoti-karmakar-42475b117/" target="_blank"
+                        rel="noopener noreferrer" class="social-link social-linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span>LinkedIn</span>
+                    </a>
+
+                    <a href="https://youtube.com/karmakarjyoti777" target="_blank" rel="noopener noreferrer"
+                        class="social-link social-youtube">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+
+                    <a href="https://t.me/DARKBOYJYOTI" target="_blank" rel="noopener noreferrer"
+                        class="social-link social-telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                        <span>Telegram</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section section-contact">
+            <div class="container container-small">
+                <h2 class="section-title">Let's Work Together</h2>
+                <p class="contact-text">Ready to collaborate on your next project? Get in touch and let's create
+                    something
+                    amazing.</p>
+                <div class="contact-buttons">
+                    <a href="mailto:karmakarjyoti777@gmail.com?subject=Hello%20from%20your%20portfolio&body=Hi%20Jyoti,%0A%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect.%0A%0ABest%20regards,"
+                        class="btn btn-primary btn-large">
+                        <i class="fas fa-envelope"></i>
+                        Send Email
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Jyoti Karmakar. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
