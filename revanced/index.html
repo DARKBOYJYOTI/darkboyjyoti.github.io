@@ -3,10 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Download latest ReVanced &amp; Morphe patched APKs for YouTube, YouTube Music, Google Photos. Auto-fetches releases from GitHub. Root &amp; non-root options." />
+  <meta name="keywords" content="ReVanced, Morphe, YouTube ReVanced, YouTube Music ReVanced, MicroG, revanced downloader, revanced apk, YouTube mod, adfree YouTube" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Jyoti Karmakar" />
+  <link rel="canonical" href="https://darkboyjyoti.github.io/revanced/" />
   <link rel="icon" type="image/png" href="fav.png">
-  <title>ReVanced & Morphe Downloader</title>
+  <title>ReVanced &amp; Morphe Downloader — YouTube, Music &amp; MicroG APKs</title>
+  <meta property="og:title" content="ReVanced &amp; Morphe Downloader" />
+  <meta property="og:description" content="Download latest ReVanced &amp; Morphe patched APKs for YouTube, YouTube Music, and Google Photos. Root &amp; non-root." />
+  <meta property="og:url" content="https://darkboyjyoti.github.io/revanced/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://darkboyjyoti.github.io/revanced/fav.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ReVanced &amp; Morphe Downloader" />
+  <meta name="twitter:description" content="Download latest ReVanced &amp; Morphe patched APKs for YouTube, YouTube Music, and Google Photos." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ReVanced & Morphe Downloader",
+    "url": "https://darkboyjyoti.github.io/revanced/",
+    "description": "Download latest ReVanced & Morphe patched APKs for YouTube, YouTube Music, Google Photos. Auto-fetches releases from GitHub.",
+    "applicationCategory": "Utility",
+    "operatingSystem": "Android",
+    "author": {
+      "@type": "Person",
+      "name": "Jyoti Karmakar",
+      "url": "https://darkboyjyoti.github.io"
+    }
+  }
+  </script>
   <link rel="stylesheet" href="styles.css" />
-
 </head>
 <body>
   <header class="site-header">
@@ -41,6 +69,11 @@
         </select>
       </div>
     </section>
+    <div id="error-banner" class="error-banner" aria-hidden="true">
+      <span class="error-icon">⚠️</span>
+      <span id="error-text" class="error-text"></span>
+      <button id="error-retry" class="error-retry">Retry</button>
+    </div>
     <section class="grid" id="cards">
       <!-- Cards will be populated in HTML for accessibility, JS will fill downloads -->
       <article class="card card-youtube" id="card-youtube">

@@ -113,6 +113,18 @@ body{
   padding:18px;
   border:1px solid var(--border);
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+@media (hover: hover){
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 40px rgba(0,0,0,0.3);
+    border-color:rgba(255,255,255,0.08);
+  }
+  [data-theme="light"] .card:hover{
+    box-shadow:0 12px 40px rgba(0,0,0,0.12);
+    border-color:rgba(0,0,0,0.1);
+  }
 }
 .card-head{display:flex; align-items:center; gap:12px}
 .card-icon{font-size:32px; display:flex; align-items:center}
@@ -178,6 +190,38 @@ body{
 .card-microg .downloads a{background:linear-gradient(135deg,var(--accent-microg) 0%,#66d17f 100%)}
 .dl-label{font-weight:700; font-size:15px; letter-spacing:0.5px}
 .dl-size{font-size:11px; font-weight:500; opacity:0.9; margin-left:auto; background:rgba(255,255,255,0.12); padding:3px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); backdrop-filter:blur(4px)}
+
+/* Loading Shimmer */
+@keyframes shimmer{
+  0%{background-position:-200% 0}
+  100%{background-position:200% 0}
+}
+.downloads:not(:has(a)){
+  min-height:46px;
+  background:linear-gradient(90deg,var(--bg) 25%,var(--card) 50%,var(--bg) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s ease-in-out infinite;
+  border-radius:12px;
+}
+.downloads:not(:has(a)) span{display:none}
+
+/* Error Banner */
+.error-banner{
+  display:none; align-items:center; gap:10px;
+  padding:12px 16px; margin-bottom:18px;
+  background:rgba(255,59,48,0.1); border:1px solid rgba(255,59,48,0.25);
+  border-radius:14px; backdrop-filter:blur(8px);
+}
+.error-banner[aria-hidden="false"]{display:flex}
+.error-icon{flex-shrink:0; font-size:16px}
+.error-text{flex:1; font-size:13px; color:var(--text); line-height:1.4}
+.error-retry{
+  flex-shrink:0; padding:6px 14px; border-radius:8px;
+  border:1px solid var(--accent-yt); background:transparent;
+  color:var(--accent-yt); font-size:12px; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.error-retry:hover{background:var(--accent-yt); color:#fff}
 
 /* note */
 .notes{max-width:var(--container-w); margin:14px auto 0; padding:12px; color:var(--muted)}
@@ -271,7 +315,7 @@ body{
 
 .slider:before {
   position: absolute;
-  content: "☀️";
+  content: "";
   height: 26px;
   width: 26px;
   left: 4px;
@@ -282,6 +326,10 @@ body{
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f59e0b'%3E%3Cpath d='M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z'/%3E%3C/svg%3E");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 input:checked + .slider {
@@ -289,7 +337,11 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  content: "🌙";
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3E%3Cpath d='M21.752 15.002A9.718 9.718 0 0118 15.75 9.75 9.75 0 018.25 6.75c0-1.55.277-3.036.752-4.413A9.75 9.75 0 0021.752 15.002z'/%3E%3C/svg%3E");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
   transform: translateX(26px);
 }
 .slider.round {

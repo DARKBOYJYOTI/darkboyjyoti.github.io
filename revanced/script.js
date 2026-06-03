@@ -16,14 +16,13 @@ const CONFIG = {
 
 // Utility: simple fetch wrapper with error handling
 async function safeFetch(url, opts = {}) {
-  try {
-    const res = await fetch(url, opts);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (e) {
-    console.warn("Fetch failed:", url, e);
-    throw e;
+  const res = await fetch(url, opts);
+  if (!res.ok) {
+    if (res.status === 403 || res.status === 429)
+      throw new Error("rate_limit");
+    throw new Error(`HTTP ${res.status}`);
   }
+  return await res.json();
 }
 
 // Parse asset name to type label
@@ -88,7 +87,7 @@ function extractVersion(release, assets) {
 
 
 // Render assets into container
-function renderAssets(containerId, metaId, releaseInfo, cardClass) {
+function renderAssets(containerId, metaId, releaseInfo) {
   const container = document.getElementById(containerId);
   const meta = document.getElementById(metaId);
   if (!container) return;
@@ -149,6 +148,8 @@ function renderAssets(containerId, metaId, releaseInfo, cardClass) {
     const sizeMB = (a.size / (1024 * 1024)).toFixed(1) + " MB";
     const link = document.createElement("a");
     link.href = a.browser_download_url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
     link.className = "download-btn";
     link.innerHTML = `<span class="dl-label">${label}</span><span class="dl-size">${sizeMB}</span>`;
     link.title = n;
@@ -173,9 +174,9 @@ async function loadAllApps() {
       if (Date.now() - cache.t < CONFIG.cacheTTLms) {
         // fill UI from cache quickly
         for (const app of CONFIG.apps) {
-          renderAssets(app.elementId, app.metaId, cache[app.id], app.cardClass);
+          renderAssets(app.elementId, app.metaId, cache[app.id]);
         }
-        renderAssets("microg-downloads", "microg-meta", cache.microg, "card-microg");
+        renderAssets("microg-downloads", "microg-meta", cache.microg);
         // still attempt to refresh in background
         refreshAllAndCache(cacheKey);
         return;
@@ -189,32 +190,60 @@ async function loadAllApps() {
   await refreshAllAndCache(cacheKey);
 }
 
+// Show/hide error banner
+function showError(msg) {
+  const banner = document.getElementById("error-banner");
+  const text = document.getElementById("error-text");
+  if (!banner || !text) return;
+  text.textContent = msg;
+  banner.setAttribute("aria-hidden", "false");
+}
+function hideError() {
+  const banner = document.getElementById("error-banner");
+  if (!banner) return;
+  banner.setAttribute("aria-hidden", "true");
+}
+
 // Refresh from GitHub and store cache
 async function refreshAllAndCache(cacheKey) {
+  hideError();
   const resultCache = { t: Date.now() };
 
   // For each app, search repo
   for (const app of CONFIG.apps) {
-    const elementId = app.elementId;
-    const metaId = app.metaId;
-    // matching function checks asset name contains any key for this app
-    const matchFn = nameLower => app.keys.some(k => nameLower.includes(k));
-    const found = await findAssetsAcrossReleases(CONFIG.appsRepo, matchFn, 8);
-    renderAssets(elementId, metaId, found, app.cardClass);
-    resultCache[app.id] = found;
+    try {
+      const matchFn = nameLower => app.keys.some(k => nameLower.includes(k));
+      const found = await findAssetsAcrossReleases(CONFIG.appsRepo, matchFn, 8);
+      renderAssets(app.elementId, app.metaId, found);
+      resultCache[app.id] = found;
+    } catch (e) {
+      resultCache[app.id] = null;
+    }
   }
 
   // MicroG
-  const microgMatchFn = nameLower => CONFIG.microgKeyCandidates.some(k => nameLower.includes(k));
-  const microgFound = await findAssetsAcrossReleases(CONFIG.microgRepo, microgMatchFn, 8);
-  renderAssets("microg-downloads", "microg-meta", microgFound, "card-microg");
-  resultCache.microg = microgFound;
-
-  // Save cache
   try {
-    localStorage.setItem(cacheKey, JSON.stringify(resultCache));
+    const microgMatchFn = nameLower => CONFIG.microgKeyCandidates.some(k => nameLower.includes(k));
+    const microgFound = await findAssetsAcrossReleases(CONFIG.microgRepo, microgMatchFn, 8);
+    renderAssets("microg-downloads", "microg-meta", microgFound);
+    resultCache.microg = microgFound;
   } catch (e) {
-    console.warn("Cache save failed", e);
+    resultCache.microg = null;
+  }
+
+  // Check if everything failed
+  const allNull = CONFIG.apps.every(a => resultCache[a.id] === null) && resultCache.microg === null;
+  if (allNull) {
+    showError("Could not fetch data from GitHub. Rate limit may be exceeded or you may be offline.");
+  }
+
+  // Save cache (only if we got at least something)
+  if (!allNull) {
+    try {
+      localStorage.setItem(cacheKey, JSON.stringify(resultCache));
+    } catch (e) {
+      console.warn("Cache save failed", e);
+    }
   }
 }
 
@@ -269,6 +298,8 @@ function initModal() {
   applyInitialTheme();
   document.getElementById("theme-checkbox").addEventListener("change", toggleTheme);
   initModal();
+
+  document.getElementById("error-retry").addEventListener("click", () => loadAllApps());
   
   const installTypeSelect = document.getElementById("install-type");
   const architectureSelect = document.getElementById("architecture");
@@ -277,12 +308,4 @@ function initModal() {
   architectureSelect.addEventListener("change", () => loadAllApps());
 
   loadAllApps();
-
-  // small UX: click handler for downloads to open in new tab by default (anchor target already _blank)
-  document.body.addEventListener("click", (e) => {
-    const a = e.target.closest("a");
-    if (a && a.href) {
-      // do nothing; anchors already set to open in new tab
-    }
-  });
 })();
