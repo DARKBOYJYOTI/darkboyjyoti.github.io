@@ -343,6 +343,72 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* ===== PREMIUM ENTRANCE ANIMATIONS ===== */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes btnPopIn {
+  from { opacity: 0; transform: scale(0.85) translateY(15px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.anim-entrance {
+  opacity: 0;
+}
+
+.anim-entrance.site-header {
+  animation: slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
+}
+
+.anim-entrance.controls {
+  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.anim-entrance.grid {
+  opacity: 1;
+}
+
+.anim-entrance.grid .card {
+  opacity: 0;
+  animation: fadeSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.anim-entrance.grid .card:nth-child(1) { animation-delay: 0.25s; }
+.anim-entrance.grid .card:nth-child(2) { animation-delay: 0.4s; }
+.anim-entrance.grid .card:nth-child(3) { animation-delay: 0.55s; }
+.anim-entrance.grid .card:nth-child(4) { animation-delay: 0.7s; }
+
+.anim-entrance.guide-card {
+  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
+}
+
+.anim-entrance.site-footer {
+  animation: fadeIn 0.5s ease 1s forwards;
+}
+
+.download-btn.btn-entrance {
+  animation: btnPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.downloads a::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.downloads a:hover::after {
+  transform: translateX(100%);
+}
+
 /* tiny responsive tweaks */
 @media(max-width:768px){
   .downloads a{padding:10px 14px; font-size:14px}

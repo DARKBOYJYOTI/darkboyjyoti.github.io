@@ -159,7 +159,8 @@ function renderAssets(containerId, metaId, releaseInfo) {
     card.style.display = 'block';
   }
 
-  for (const a of filteredAssets) {
+  for (let i = 0; i < filteredAssets.length; i++) {
+    const a = filteredAssets[i];
     const n = a.name;
     const label = classifyAsset();
     const sizeMB = (a.size / (1024 * 1024)).toFixed(1) + " MB";
@@ -170,6 +171,8 @@ function renderAssets(containerId, metaId, releaseInfo) {
     link.className = "download-btn";
     link.innerHTML = `<span class="dl-label">${label}</span><span class="dl-size">${sizeMB}</span>`;
     link.title = n;
+    link.style.animationDelay = `${i * 0.08}s`;
+    link.classList.add('btn-entrance');
     container.appendChild(link);
   }
   
@@ -177,6 +180,7 @@ function renderAssets(containerId, metaId, releaseInfo) {
     const date = new Date(release.published_at || release.created_at);
     const version = extractVersion(release, assets);
     meta.textContent = `Version: ${version} • ${formatDateDDMMYYYY(date)}`;
+    meta.style.animation = 'fadeIn 0.4s ease forwards';
   }
 }
 
