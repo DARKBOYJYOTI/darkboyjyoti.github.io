@@ -3,15 +3,14 @@
 
 const CONFIG = {
   appsRepo: "j-hc/revanced-magisk-module",
-  microgRepo: "ReVanced/GmsCore",
+  microgRepo: "MorpheApp/MicroG-RE",
   // mapping for apps - key used to search asset names (lowercase)
   apps: [
-    { id: "youtube", title: "YouTube", keys: ["youtube-revanced", "youtube-revanced-magisk", "youtube-revanced-v", "youtube-revanced"] , elementId: "youtube-downloads", metaId: "youtube-meta", cardClass: "card-youtube" },
-    { id: "ytmusic", title: "YouTube Music", keys: ["music-revanced", "ytmusic", "music-revanced-magisk", "music-revanced-v"], elementId: "ytmusic-downloads", metaId: "ytmusic-meta", cardClass: "card-ytmusic" },
-    { id: "photos", title: "Google Photos", keys: ["googlephotos-revanced", "googlephotos", "photos-revanced", "googlephotos"], elementId: "photos-downloads", metaId: "photos-meta", cardClass: "card-photos" },
-    { id: "spotify", title: "Spotify", keys: ["spotify-revanced", "spotify-revanced-v", "spotify"], elementId: "spotify-downloads", metaId: "spotify-meta", cardClass: "card-spotify" }
+    { id: "youtube", title: "YouTube", keys: ["youtube-morphe"], elementId: "youtube-downloads", metaId: "youtube-meta", cardClass: "card-youtube" },
+    { id: "ytmusic", title: "YouTube Music", keys: ["music-morphe"], elementId: "ytmusic-downloads", metaId: "ytmusic-meta", cardClass: "card-ytmusic" },
+    { id: "photos", title: "Google Photos", keys: ["googlephotos"], elementId: "photos-downloads", metaId: "photos-meta", cardClass: "card-photos" }
   ],
-  microgKeyCandidates: ["app.revanced.android.gms", "gmscore", "revanced-gmscore"],
+  microgKeyCandidates: ["microg"],
   cacheTTLms: 1000 * 60 * 60 * 6 // 6 hours
 };
 
@@ -28,7 +27,7 @@ async function safeFetch(url, opts = {}) {
 }
 
 // Parse asset name to type label
-function classifyAsset(nameLower) {
+function classifyAsset() {
   return "Download";
 }
 
@@ -110,9 +109,9 @@ function renderAssets(containerId, metaId, releaseInfo, cardClass) {
   let filteredAssets = assets;
 
   if (installType === "root") {
-    filteredAssets = assets.filter(a => a.name.toLowerCase().includes("magisk"));
+    filteredAssets = assets.filter(a => a.name.toLowerCase().includes("magisk") || a.name.toLowerCase().includes("module"));
   } else { // non-root
-    filteredAssets = assets.filter(a => !a.name.toLowerCase().includes("magisk"));
+    filteredAssets = assets.filter(a => !a.name.toLowerCase().includes("magisk") && !a.name.toLowerCase().includes("module"));
   }
 
   // Now apply architecture filtering to the filteredAssets
@@ -146,14 +145,13 @@ function renderAssets(containerId, metaId, releaseInfo, cardClass) {
 
   for (const a of filteredAssets) {
     const n = a.name;
-    const label = classifyAsset(n.toLowerCase());
+    const label = classifyAsset();
+    const sizeMB = (a.size / (1024 * 1024)).toFixed(1) + " MB";
     const link = document.createElement("a");
     link.href = a.browser_download_url;
     link.className = "download-btn";
-    link.textContent = label;
-    // Add title with name and size/time
-    const sizeMB = (a.size / (1024 * 1024)).toFixed(1) + " MB";
-    link.title = `${n} — ${sizeMB}`;
+    link.innerHTML = `<span class="dl-label">${label}</span><span class="dl-size">${sizeMB}</span>`;
+    link.title = n;
     container.appendChild(link);
   }
   
@@ -167,7 +165,7 @@ function renderAssets(containerId, metaId, releaseInfo, cardClass) {
 // High-level function for all apps
 async function loadAllApps() {
   // Try cache first
-  const cacheKey = "revanced_cache_v1";
+  const cacheKey = "revanced_cache_v2";
   try {
     const cacheRaw = localStorage.getItem(cacheKey);
     if (cacheRaw) {
@@ -206,9 +204,8 @@ async function refreshAllAndCache(cacheKey) {
     resultCache[app.id] = found;
   }
 
-  // Spotify sometimes named with 'spotify' assets in same repo
   // MicroG
-  const microgMatchFn = nameLower => CONFIG.microgKeyCandidates.some(k => nameLower.includes(k)) && nameLower.includes("signed.apk");
+  const microgMatchFn = nameLower => CONFIG.microgKeyCandidates.some(k => nameLower.includes(k));
   const microgFound = await findAssetsAcrossReleases(CONFIG.microgRepo, microgMatchFn, 8);
   renderAssets("microg-downloads", "microg-meta", microgFound, "card-microg");
   resultCache.microg = microgFound;
