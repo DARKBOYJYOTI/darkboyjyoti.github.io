@@ -113,18 +113,6 @@ body{
   padding:18px;
   border:1px solid var(--border);
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-@media (hover: hover){
-  .card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 12px 40px rgba(0,0,0,0.3);
-    border-color:rgba(255,255,255,0.08);
-  }
-  [data-theme="light"] .card:hover{
-    box-shadow:0 12px 40px rgba(0,0,0,0.12);
-    border-color:rgba(0,0,0,0.1);
-  }
 }
 .card-head{display:flex; align-items:center; gap:12px}
 .card-icon{font-size:32px; display:flex; align-items:center}
