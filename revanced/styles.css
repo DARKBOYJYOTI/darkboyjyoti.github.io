@@ -120,6 +120,41 @@ body{
 .card-body{margin-top:12px}
 .meta{font-size:13px; color:var(--muted); margin-bottom:8px}
 
+/* Guide Card */
+.guide-card{
+  background:var(--card); border-radius:var(--radius);
+  padding:18px 22px; margin-top:18px;
+  border:1px solid var(--border);
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
+.guide-head{display:flex; align-items:center; gap:8px; margin-bottom:14px}
+.guide-icon{font-size:18px}
+.guide-title{font-weight:700; font-size:15px; color:var(--text)}
+.guide-body{display:flex; flex-direction:column; gap:10px}
+.guide-item{
+  display:flex; align-items:flex-start; gap:10px;
+  padding:10px 14px; background:var(--bg);
+  border-radius:12px; border:1px solid var(--border);
+  transition:all .2s;
+}
+.guide-item:hover{border-color:var(--accent-yt); transform:translateX(3px)}
+.guide-label{
+  flex-shrink:0; min-width:120px;
+  font-weight:700; font-size:13px; color:var(--accent-yt);
+  padding-top:1px;
+}
+.guide-desc{font-size:13px; color:var(--muted); line-height:1.5}
+.guide-tag{
+  display:inline-block; font-size:11px; font-weight:600;
+  background:linear-gradient(135deg,var(--accent-yt),#e6352a);
+  color:#fff; padding:1px 8px; border-radius:6px;
+  margin-left:4px; vertical-align:middle;
+}
+@media(max-width:600px){
+  .guide-item{flex-direction:column; gap:4px}
+  .guide-label{min-width:auto}
+}
+
 /* downloads buttons */
 .downloads{display:flex; gap:10px; flex-wrap:wrap; justify-content: center; margin-top: 15px;}
 .downloads a{
