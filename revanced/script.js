@@ -1,6 +1,10 @@
 // script.js
 // ReVanced Downloader — dynamic release asset fetch + dynamic buttons + theme + disclaimer modal + caching
 
+// One-time migration: clear old cache keys
+localStorage.removeItem("revanced_cache_v1");
+localStorage.removeItem("revanced_cache_v2");
+
 const CONFIG = {
   appsRepo: "j-hc/revanced-magisk-module",
   microgRepo: "MorpheApp/MicroG-RE",
@@ -11,8 +15,21 @@ const CONFIG = {
     { id: "photos", title: "Google Photos", keys: ["googlephotos"], elementId: "photos-downloads", metaId: "photos-meta", cardClass: "card-photos" }
   ],
   microgKeyCandidates: ["microg"],
-  cacheTTLms: 1000 * 60 * 60 * 6 // 6 hours
+  cacheTTLms: 1000 * 60 * 60 * 12 // 12 hours
 };
+
+// Quick check: fetch only latest release tag (lightweight, 1 API call per repo)
+async function getLatestTag(repo) {
+  try {
+    const url = `https://api.github.com/repos/${repo}/releases/latest`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.tag_name || null;
+  } catch {
+    return null;
+  }
+}
 
 // Utility: simple fetch wrapper with error handling
 async function safeFetch(url, opts = {}) {
@@ -166,7 +183,7 @@ function renderAssets(containerId, metaId, releaseInfo) {
 // High-level function for all apps
 async function loadAllApps() {
   // Try cache first
-  const cacheKey = "revanced_cache_v2";
+  const cacheKey = "revanced_cache_v3";
   try {
     const cacheRaw = localStorage.getItem(cacheKey);
     if (cacheRaw) {
@@ -177,7 +194,18 @@ async function loadAllApps() {
           renderAssets(app.elementId, app.metaId, cache[app.id]);
         }
         renderAssets("microg-downloads", "microg-meta", cache.microg);
-        // still attempt to refresh in background
+        // Background: lightweight tag check instead of full refresh
+        const cachedTags = cache._tags;
+        if (cachedTags) {
+          const [newAppTag, newMicrogTag] = await Promise.all([
+            getLatestTag(CONFIG.appsRepo),
+            getLatestTag(CONFIG.microgRepo)
+          ]);
+          if (newAppTag === cachedTags.appsRepo && newMicrogTag === cachedTags.microgRepo) {
+            return; // cache still fresh
+          }
+        }
+        // Tags changed or missing — full refresh
         refreshAllAndCache(cacheKey);
         return;
       }
@@ -236,6 +264,13 @@ async function refreshAllAndCache(cacheKey) {
   if (allNull) {
     showError("Could not fetch data from GitHub. Rate limit may be exceeded or you may be offline.");
   }
+
+  // Store latest tags for version-based cache validation
+  const [appTag, microgTag] = await Promise.all([
+    getLatestTag(CONFIG.appsRepo),
+    getLatestTag(CONFIG.microgRepo)
+  ]);
+  resultCache._tags = { appsRepo: appTag, microgRepo: microgTag };
 
   // Save cache (only if we got at least something)
   if (!allNull) {
