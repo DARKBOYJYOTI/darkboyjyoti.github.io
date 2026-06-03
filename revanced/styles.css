@@ -136,6 +136,9 @@ body{
   padding:10px 14px; background:var(--bg);
   border-radius:12px; border:1px solid var(--border);
   transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+  user-select:none;
 }
 .guide-item:hover{border-color:var(--accent-yt); transform:translateX(3px)}
 .guide-label{

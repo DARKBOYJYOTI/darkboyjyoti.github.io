@@ -301,6 +301,39 @@ function initModal() {
 
   document.getElementById("error-retry").addEventListener("click", () => loadAllApps());
 
+  // Guide card — smart click: scroll up, change dropdown, reload
+  document.querySelector(".guide-card")?.addEventListener("click", (e) => {
+    const item = e.target.closest(".guide-item");
+    if (!item) return;
+    const label = item.querySelector(".guide-label");
+    if (!label) return;
+    const text = label.textContent.trim();
+
+    const installSelect = document.getElementById("install-type");
+    const archSelect = document.getElementById("architecture");
+    let changed = false;
+
+    if (text.startsWith("Non-Rooted")) {
+      if (installSelect.value !== "non-root") { installSelect.value = "non-root"; loadAllApps(); }
+    } else if (text.startsWith("Rooted")) {
+      if (installSelect.value !== "root") { installSelect.value = "root"; loadAllApps(); }
+    } else if (text.startsWith("ARM64")) {
+      if (archSelect.value !== "arm64") { archSelect.value = "arm64"; loadAllApps(); }
+    } else if (text.startsWith("ARM ")) {
+      if (archSelect.value !== "arm") { archSelect.value = "arm"; loadAllApps(); }
+    } else {
+      return;
+    }
+
+    // Highlight & scroll (always, even if already selected)
+    const target = text.startsWith("ARM") ? archSelect : installSelect;
+    target.style.transition = "box-shadow 0.3s";
+    target.style.boxShadow = "0 0 0 3px var(--accent-yt)";
+    setTimeout(() => { target.style.boxShadow = ""; }, 800);
+
+    document.querySelector(".controls")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
   const installTypeSelect = document.getElementById("install-type");
   const architectureSelect = document.getElementById("architecture");
 
