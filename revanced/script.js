@@ -301,23 +301,6 @@ function initModal() {
 
   document.getElementById("error-retry").addEventListener("click", () => loadAllApps());
 
-  // Guide card click — change dropdowns
-  document.querySelector(".guide-card")?.addEventListener("click", (e) => {
-    const item = e.target.closest(".guide-item");
-    if (!item) return;
-    const label = item.querySelector(".guide-label");
-    if (!label) return;
-    const text = label.textContent.trim();
-    const installSelect = document.getElementById("install-type");
-    const archSelect = document.getElementById("architecture");
-    if (text.startsWith("Non-Rooted")) { installSelect.value = "non-root"; }
-    else if (text.startsWith("Rooted")) { installSelect.value = "root"; }
-    else if (text.startsWith("ARM64")) { archSelect.value = "arm64"; }
-    else if (text.startsWith("ARM ")) { archSelect.value = "arm"; }
-    else return;
-    loadAllApps();
-  });
-
   const installTypeSelect = document.getElementById("install-type");
   const architectureSelect = document.getElementById("architecture");
 
