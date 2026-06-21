@@ -448,112 +448,25 @@
       .fromTo('.scroll-indicator', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5 }, 1.6);
 
     // Section headers
-    gsap.utils.toArray('.section-header').forEach(function (header) {
-      gsap.from(header, {
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 85%',
-          once: true
-        },
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        ease: 'power3.out'
-      });
-    });
+    // (scroll-triggered entrance removed per user request)
 
     // About cards
-    gsap.utils.toArray('.about-card').forEach(function (card, i) {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 88%',
-          once: true
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.7,
-        delay: i * 0.15,
-        ease: 'power3.out'
-      });
-    });
+    // (scroll-triggered entrance removed per user request)
 
     // Project cards
-    gsap.utils.toArray('.project-card').forEach(function (card, i) {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 88%',
-          once: true
-        },
-        opacity: 0,
-        y: 60,
-        duration: 0.7,
-        delay: i * 0.1,
-        ease: 'power3.out'
-      });
-    });
+    // (scroll-triggered entrance removed per user request)
 
-    // Skill cards with bar fill
-    gsap.utils.toArray('.skill-card').forEach(function (card, i) {
+    // Skill cards — set bar width immediately
+    gsap.utils.toArray('.skill-card').forEach(function (card) {
       const fill = card.querySelector('.skill-fill');
-      const tw = fill ? fill.dataset.width : '0';
-
-      // Set inline width so each bar has its own target
-      if (fill) fill.style.width = tw + '%';
-
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 88%',
-          once: true
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        delay: i * 0.08,
-        ease: 'power3.out',
-        onComplete: function () {
-          if (fill) {
-            gsap.to(fill, {
-              scaleX: 1,
-              duration: 1.2,
-              delay: 0.2,
-              ease: 'power3.out'
-            });
-          }
-        }
-      });
+      if (fill) fill.style.width = fill.dataset.width + '%';
     });
 
     // Social links
-    gsap.utils.toArray('.social-link').forEach(function (link, i) {
-      gsap.from(link, {
-        scrollTrigger: {
-          trigger: link,
-          start: 'top 90%',
-          once: true
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        delay: i * 0.08,
-        ease: 'power3.out'
-      });
-    });
+    // (scroll-triggered entrance removed per user request)
 
     // Contact
-    gsap.from('.contact-wrapper', {
-      scrollTrigger: {
-        trigger: '.contact-wrapper',
-        start: 'top 88%',
-        once: true
-      },
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      ease: 'power3.out'
-    });
+    // (scroll-triggered entrance removed per user request)
 
     ScrollTrigger.refresh();
   }
