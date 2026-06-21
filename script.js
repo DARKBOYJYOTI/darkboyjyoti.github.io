@@ -107,56 +107,6 @@
   }
 
   /* ===========================================
-     CUSTOM CURSOR (desktop only)
-     =========================================== */
-  function initCursor() {
-    if (isTouchDevice || prefersReducedMotion) return;
-
-    const dot = qs('#cursorDot');
-    const ring = qs('#cursorRing');
-    if (!dot || !ring) return;
-
-    // Hide cursor elements until first mousemove
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-    dot.style.pointerEvents = 'none';
-    ring.style.pointerEvents = 'none';
-    let cursorInitialized = false;
-
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    document.addEventListener('mousemove', function (e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.transform = 'translate(' + (mouseX - 4) + 'px, ' + (mouseY - 4) + 'px)';
-      if (!cursorInitialized) {
-        cursorInitialized = true;
-        ringX = mouseX;
-        ringY = mouseY;
-        dot.style.opacity = '1';
-        ring.style.opacity = '1';
-        dot.style.pointerEvents = 'auto';
-        ring.style.pointerEvents = 'auto';
-      }
-    });
-
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.transform = 'translate(' + (ringX - 20) + 'px, ' + (ringY - 20) + 'px)';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    const hoverTargets = qsa('a, button, .project-card, .social-link');
-    hoverTargets.forEach(el => {
-      el.addEventListener('mouseenter', function () { ring.classList.add('hovered'); });
-      el.addEventListener('mouseleave', function () { ring.classList.remove('hovered'); });
-    });
-  }
-
-  /* ===========================================
      PROGRESS BAR
      =========================================== */
   function initProgressBar() {
@@ -668,7 +618,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     initTheme();
     initMobileMenu();
-    initCursor();
     initProgressBar();
     initNav();
     initActiveNavAria();

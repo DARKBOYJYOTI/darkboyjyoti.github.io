@@ -46,7 +46,7 @@
 }
 
 /* ----- LIGHT THEME (default) ----- */
-[data-theme="light"],
+:root[data-theme="light"],
 :root:not([data-theme="dark"]) {
   --md-primary: #3b82f6;
   --md-on-primary: #ffffff;
@@ -94,7 +94,7 @@
 }
 
 /* ----- DARK THEME ----- */
-[data-theme="dark"] {
+:root[data-theme="dark"] {
   --md-primary: #acc6ff;
   --md-on-primary: #002f65;
   --md-primary-container: #0047a3;
@@ -141,7 +141,7 @@
 }
 
 /* ----- SYSTEM THEME (auto-switch) ----- */
-[data-theme="system"] {
+:root[data-theme="system"] {
   --md-primary: #3b82f6;
   --md-on-primary: #ffffff;
   --md-primary-container: #d7e3ff;
@@ -178,7 +178,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  [data-theme="system"] {
+:root[data-theme="system"] {
     --md-primary: #acc6ff;
     --md-on-primary: #002f65;
     --md-primary-container: #0047a3;
@@ -314,51 +314,7 @@ ul { list-style: none; }
   100% { background-position: 200% 50%; }
 }
 
-/* ========== 5. CUSTOM CURSOR ========== */
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-}
-
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--md-primary);
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--md-primary);
-}
-
-.cursor-ring {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--md-primary);
-  border-radius: 50%;
-  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-color 0.3s,
-              background 0.3s;
-}
-
-.cursor-ring.hovered {
-  width: 56px;
-  height: 56px;
-  border-color: var(--md-secondary);
-  background: color-mix(in srgb, var(--md-primary) 8%, transparent);
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
-
-/* ========== 6. TOP APP BAR (nav) - M3 Medium ========== */
+/* ========== 5. TOP APP BAR (nav) - M3 Medium ========== */
 
 .nav {
   position: fixed;
@@ -512,9 +468,8 @@ ul { list-style: none; }
 }
 
 .theme-seg-btn.active {
-  background: var(--md-surface-container-high);
+  background: color-mix(in srgb, var(--md-primary) 10%, transparent);
   color: var(--md-primary);
-  box-shadow: var(--md-elevation-level1);
 }
 
 .theme-seg-btn:active {
