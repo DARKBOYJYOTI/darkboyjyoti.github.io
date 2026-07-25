@@ -237,8 +237,6 @@ body {
   overflow-x: hidden;
   transition: background 0.35s ease, color 0.35s ease;
   cursor: default;
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 a { text-decoration: none; color: inherit; }

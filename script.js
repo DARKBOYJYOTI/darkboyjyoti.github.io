@@ -6,13 +6,6 @@
      =========================================== */
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-
-  /* ===========================================
-     APP-LIKE BEHAVIOR: no select, no zoom, no right-click
-     =========================================== */
-  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-  document.addEventListener('selectstart', function (e) { e.preventDefault(); }); // fallback
-
   /* ===========================================
      UTILITY
      =========================================== */
